@@ -1,0 +1,9 @@
+﻿<Application x:Class="TP3_420_14B_FX.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:TP3_420_14B_FX"
+             StartupUri="FormPointDeVente.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
