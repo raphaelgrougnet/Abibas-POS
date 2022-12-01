@@ -21,6 +21,7 @@ namespace TP3_420_14B_FX.classes
         public const int CODE_NB_CARAC_MAX = 10;
 
         public const int PRIX_MIN_VAL = 0;
+        public const int QUANTITE_MIN_VAL = 1;
 
         #endregion
 
@@ -193,8 +194,13 @@ namespace TP3_420_14B_FX.classes
         /// <param name="image">Nom du fichier image du produit</param>
         public Produit(uint id, string code, String nom, Categorie categorie, decimal prix, string image)
         {
-            //todo: implémenter Constructeur Produit
-            throw new NotImplementedException();
+            //todo: implémenter Constructeur Produit FAIT
+            this.Id = id;
+            this.Code = code;
+            this.Nom = nom;
+            this.Categorie = categorie;
+            this.Prix = prix;
+            this.Image = image;
         }
 
         #endregion
@@ -214,6 +220,45 @@ namespace TP3_420_14B_FX.classes
         /// <summary>
         /// Permet de vérifier si deux objets de type Produit sont égaux.
         /// </summary>
+        /// <param name="produitGauche">Objet de type Produit à comparer avec l'autre objet</param>
+        /// <param name="produitDroit">Objet de type Produit à comparer avec l'autre objet</param>
+        /// <returns>true si les deux codes d'objets sont égaux; false, autrement. Deux produits sont égaux si leur id et leur code sont identiques</returns>
+        public static bool operator == (Produit produitGauche, Produit produitDroit)
+        {
+            //todo : Implémenter Equals pour Produit FAIT
+            if (produitGauche is null || produitDroit is null)
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(produitGauche, produitDroit))
+            {
+                return true;
+            }
+            return produitGauche.Id == produitDroit.Id && produitGauche.Code == produitDroit.Code;
+            
+
+
+        }
+
+        /// <summary>
+        /// Permet de vérifier si deux objets de type Produit sont différents.
+        /// </summary>
+        /// <param name="produitGauche">Objet de type Produit à comparer avec l'autre objet</param>
+        /// <param name="produitDroit">Objet de type Produit à comparer avec l'autre objet</param>
+        /// <returns>true si les deux objets sont différents; false, autrement. Deux produits sont différents si leur id et leur code sont différents</returns>
+        public static bool operator != (Produit produitGauche, Produit produitDroit)
+        {
+            //todo : Implémenter Equals pour Produit FAIT
+
+            return !(produitGauche == produitDroit);
+
+
+        }
+
+
+        /// <summary>
+        /// Permet de vérifier si deux objets de type Produit sont égaux.
+        /// </summary>
         /// <param name="obj">Objet de type Produit à comparer avec l'objet courant</param>
         /// <returns>true si les deux objets sont égaux; false, autrement. Deux produits sont égaux si leur id et leur code sont identiques</returns>
         /// <remarks>
@@ -221,8 +266,21 @@ namespace TP3_420_14B_FX.classes
         /// </remarks>
         public override bool Equals(Object obj)
         {
-            //todo : Implémenter Equals pour Produit
-            throw new NotImplementedException();
+            //todo : Implémenter Equals pour Produit FAIT
+            if (obj is null)
+            {
+                return false;
+            }
+            if (Object.ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (this.GetType() != obj.GetType())
+            {
+                return false;
+            }
+            return this == (Produit)obj;
+            
 
 
         }
