@@ -13,8 +13,15 @@ namespace TP3_420_14B_FX.classes
     {
         #region CONSTANTES
 
-       
+        /// <summary>
+        /// Quantté minimale
+        /// </summary>
+        public const byte QUANTITE_MIN_VAL = 0;
 
+        /// <summary>
+        /// Prix minimal 
+        /// </summary>
+        public const byte PRIX_MIN_VAL = 0;
         #endregion
 
         #region ATTRIBUTS
@@ -51,7 +58,9 @@ namespace TP3_420_14B_FX.classes
             get { return this._produit; }
             private set
             {
-                //Todo : Implémenter la validation du produit
+                //Todo : Implémenter la validation du produit FAIT
+                if(value is null)
+                    throw new ArgumentNullException("Produit");
                 _produit = value;
             }
         }
@@ -65,7 +74,9 @@ namespace TP3_420_14B_FX.classes
             get { return this._prixUnitaire; }
             set
             {
-                //Todo : Implémenter la validation du prix unitaire
+                //Todo : Implémenter la validation du prix unitaire FAIT
+                if(value <= PRIX_MIN_VAL)
+                    throw new ArgumentOutOfRangeException("Prix");
                 _prixUnitaire = value;
             }
         }
@@ -80,7 +91,9 @@ namespace TP3_420_14B_FX.classes
             get { return this._quantite; }
             set
             {
-                //Todo : Implémenter la validation de la quantité
+                //Todo : Implémenter la validation de la quantité FAIT
+                if(value <= QUANTITE_MIN_VAL)
+                    throw new ArgumentOutOfRangeException("Quantité");
                 _quantite = value;
             }
         }
@@ -92,10 +105,9 @@ namespace TP3_420_14B_FX.classes
         {
             get
             {
-                //Todo : Implémenter le calcul du sous-total
-                return 0;
+                //Todo : Implémenter le calcul du sous-total FAIT
+                return PrixUnitaire * Quantite;
             }
-
         }
 
         #endregion
@@ -111,7 +123,9 @@ namespace TP3_420_14B_FX.classes
         public ProduitFacture(Produit produit, decimal prixUnitaire, uint quantite)
         {
             //Todo : Implémenter le constructeur ProduitFacture
-            throw new NotImplementedException();
+            Produit = produit;
+            PrixUnitaire = prixUnitaire;
+            Quantite = quantite;
         }
 
         #endregion
