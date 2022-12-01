@@ -14,6 +14,13 @@ namespace TP3_420_14B_FX.classes
 
         #region CONSTANTES
 
+        public const int NOM_NB_CARAC_MIN = 3;
+        public const int NOM_NB_CARAC_MAX = 30;
+
+        public const int CODE_NB_CARAC_MIN = 5;
+        public const int CODE_NB_CARAC_MAX = 10;
+
+        public const int PRIX_MIN_VAL = 0;
 
         #endregion
 
@@ -76,8 +83,17 @@ namespace TP3_420_14B_FX.classes
             get { return this._code; }
             set 
             {
-                //Todo: Implémenter validation code produit.
-                _code = value;
+                //Todo: Implémenter validation code produit. FAIT
+                if (value.Trim().Length < CODE_NB_CARAC_MIN ||value.Trim().Length > CODE_NB_CARAC_MAX)
+                {
+                    throw new ArgumentOutOfRangeException("Code", 
+                                                         $"La longeur du code doit être comprise entre {CODE_NB_CARAC_MIN} et {CODE_NB_CARAC_MAX} caratères");
+                }
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException("Code", "Le code ne peut pas être nul ou vide");
+                }
+                _code = value.Trim().ToUpper();
             }
 
         }
@@ -93,8 +109,17 @@ namespace TP3_420_14B_FX.classes
             get { return this._nom; }
             set 
             {
-                //todo: implémenter validation nom;
-                _nom = value;
+                //todo: implémenter validation nom; FAIT
+
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException("Nom", "Le nom ne peut pas être nul ou vide");
+                }
+                if (value.Trim().Length < NOM_NB_CARAC_MIN || value.Trim().Length > NOM_NB_CARAC_MAX)
+                {
+                    throw new ArgumentOutOfRangeException("Nom", $"La longeur du nom doit être comprise entre {NOM_NB_CARAC_MIN} et {NOM_NB_CARAC_MAX} caratères");
+                }
+                _nom = value.Trim();
             }
         }
 
@@ -107,7 +132,11 @@ namespace TP3_420_14B_FX.classes
             get { return this._categorie; }
             set 
             {
-                //todo: implémenter validation catégorie
+                //todo: implémenter validation catégorie FAIT
+                if (value is null)
+                {
+                    throw new ArgumentNullException("Categorie", "La catégorie ne peut pas être nulle");
+                }
                 _categorie = value;
             }
         }
@@ -122,7 +151,11 @@ namespace TP3_420_14B_FX.classes
             get { return this._prix; }
             set
             {
-                //todo: implémenter validation prix
+                //todo: implémenter validation prix FAIT
+                if(value <= PRIX_MIN_VAL)
+                {
+                    throw new ArgumentOutOfRangeException("Prix", $"Le prix doit être strictement supérieur à {PRIX_MIN_VAL} $");
+                }
                 _prix = value;
             }
         }
@@ -136,7 +169,11 @@ namespace TP3_420_14B_FX.classes
             get { return this._image; }
             set 
             {
-                //todo: implémenter validation image
+                //todo: implémenter validation image FAIT
+                if (String.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException("Image", "L'image ne peut pas être nulle");
+                }
                 _image = value;
 
 
