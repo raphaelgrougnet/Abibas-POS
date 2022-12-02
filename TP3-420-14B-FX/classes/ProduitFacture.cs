@@ -92,7 +92,7 @@ namespace TP3_420_14B_FX.classes
             set
             {
                 //Todo : Implémenter la validation de la quantité FAIT
-                if(value <= QUANTITE_MIN_VAL)
+                if(value < QUANTITE_MIN_VAL)
                     throw new ArgumentOutOfRangeException("Quantité");
                 _quantite = value;
             }
