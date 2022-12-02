@@ -10,6 +10,7 @@ namespace TP3_420_14B_FX.classes
     {
         #region CONSTANTES
 
+        public const string CONNEXION = "MySQL";
 
         #endregion
 
@@ -20,7 +21,18 @@ namespace TP3_420_14B_FX.classes
 
         #region MÉTHODES
 
-      
+        private static MySqlConnection CreerConnection()
+        {
+            string connexion = ConfigurationManager.ConnectionStrings[CONNEXION].ConnectionString;
+
+            return new MySqlConnection(connexion);
+        }
+
+        public static void FermerConnection(MySqlConnection cn)
+        {
+            if (cn.State == System.Data.ConnectionState.Open)
+                cn.Close();
+        }
 
         /// <summary>
         /// Permet d'obtenir liste des catégories provenant de la base de données
@@ -29,8 +41,33 @@ namespace TP3_420_14B_FX.classes
         public static List<Categorie> ObtenirListeCategories()
         {
 
-            //todo : Implémenter ObtenirListeCategories
-            throw new NotImplementedException();
+            //todo : Implémenter ObtenirListeCategories FAIT 
+            MySqlConnection cn = CreerConnection();
+
+            List<Categorie> categories = new List<Categorie>();
+            try
+            {
+                cn.Open();
+
+                string requete = "SELECT id, nom FROM categories ORDER BY id";
+
+                MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Categorie categorie = new Categorie(dr.GetUInt32(0), dr.GetString(1));
+                    categories.Add(categorie);
+                }
+
+                dr.Close();
+
+                return categories;
+            }
+            catch(Exception) { throw; }
+            finally { FermerConnection(cn); }
+
         }
 
         /// <summary>
@@ -40,8 +77,33 @@ namespace TP3_420_14B_FX.classes
         /// <exception cref="System.ArgumentNullException">Lancée lorsque le produit est nul.</exception>
         public static void AjouterProduit(Produit produit)
         {
-            //todo : Implémenter AjouterProduit
-            throw new NotImplementedException();
+            //todo : Implémenter AjouterProduit FAIT 
+            if (produit is null)
+                throw new ArgumentNullException("produit", "Une produit ne peut pas être nul");
+
+            MySqlConnection cn = CreerConnection();
+
+            try
+            {
+                cn.Open();
+
+                string requete = $"INSERT INTO produits (Id, Code, Nom, Prix, Image, IdCategorie) VALUES(@id, @code, @nom, @prix, @image, @idCategorie)";
+
+                MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", produit.Id);
+                cmd.Parameters.AddWithValue("@code", produit.Code);
+                cmd.Parameters.AddWithValue("@nom", produit.Nom);
+                cmd.Parameters.AddWithValue("@prix", produit.Prix);
+                cmd.Parameters.AddWithValue("@image", produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
+
+                cmd.ExecuteNonQuery();
+
+            }
+            catch(Exception) { throw; }
+            finally { FermerConnection(cn); }
+
         }
 
         /// <summary>
