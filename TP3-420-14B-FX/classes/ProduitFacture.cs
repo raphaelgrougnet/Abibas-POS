@@ -16,12 +16,12 @@ namespace TP3_420_14B_FX.classes
         /// <summary>
         /// Quantté minimale
         /// </summary>
-        public const byte QUANTITE_MIN_VAL = 0;
+        public const uint QUANTITE_MIN_VAL = 1;
 
         /// <summary>
         /// Prix minimal 
         /// </summary>
-        public const byte PRIX_MIN_VAL = 0;
+        public const uint PRIX_MIN_VAL = 0;
         #endregion
 
         #region ATTRIBUTS

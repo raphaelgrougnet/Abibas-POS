@@ -83,8 +83,17 @@ namespace TP3_420_14B_FX.classes
             {
 
 
-                //Todo: Implémenter le calcul du sous-total
-                return 0;
+                //Todo: Implémenter le calcul du sous-total de la liste de produits FAIT
+                decimal montantSousTotal = 0;
+                foreach (ProduitFacture produit in this.ProduitsFacture)
+                {
+                    montantSousTotal += produit.SousTotal;
+                }
+                return montantSousTotal;
+
+                
+
+
             }
 
         }
@@ -99,8 +108,11 @@ namespace TP3_420_14B_FX.classes
             get
             {
                 //todo : Implémenter le calcul du montant de TPS de la facture
-                return 0;
+                decimal montantTPS = 0;
+                montantTPS = this.MontantSousTotal * 0.05m;
+                return montantTPS;
             }
+            
 
         }
 
@@ -112,8 +124,10 @@ namespace TP3_420_14B_FX.classes
         {
             get
             {
-                //todo : Implémenter le calcul du montant de TVQ de la facture
-                return 0;
+                //todo : Implémenter le calcul du montant de TVQ de la facture FAIT
+                decimal montantTVQ = 0;
+                montantTVQ = this.MontantSousTotal * 0.09975m;
+                return montantTVQ;
             }
 
         }
@@ -126,8 +140,10 @@ namespace TP3_420_14B_FX.classes
         {
             get
             {
-                //todo : Implémenter le calcul du montant total de la facture
-                return 0;
+                //todo : Implémenter le calcul du montant total de la facture FAIT
+                decimal montantTotal = 0;
+                montantTotal = this.MontantSousTotal + this.MontantTPS + this.MontantTVQ;
+                return montantTotal;
             }
 
         }
@@ -142,8 +158,9 @@ namespace TP3_420_14B_FX.classes
         /// <remarks>Initialise une liste de produits vide</remarks>
         public Facture()
         {
-            //todo : Implémenter le consturcteur sans  paramètre de Facture.
-            throw new NotImplementedException();
+            //todo : Implémenter le consturcteur sans  paramètre de Facture. FAIT
+            this.ProduitsFacture = new List<ProduitFacture>();
+            
         }
 
         /// <summary>
@@ -154,8 +171,11 @@ namespace TP3_420_14B_FX.classes
         /// <param name="dateCreation">Date de créatoin de la facture</param>
         public Facture(uint id, DateTime dateCreation)
         {
-            //todo : Implémenter le consturcteur avec  paramètre de Facture.
-            throw new NotImplementedException();
+            //todo : Implémenter le consturcteur avec  paramètre de Facture. FAIT
+            this.Id = id;
+            this.DateCreation = dateCreation;
+            this.ProduitsFacture = new List<ProduitFacture>();
+            
 
         }
 
@@ -178,7 +198,21 @@ namespace TP3_420_14B_FX.classes
         public void AjouterProduit(Produit produit, decimal prixUnitaire, uint quantite)
         {
             //todo : Implémenter AjouterProduit
-            throw new NotImplementedException();
+            if (produit == null)
+            {
+                throw new ArgumentNullException("Produit","Le produit ne peut pas être null");
+            }
+            if (prixUnitaire < ProduitFacture.PRIX_MIN_VAL)
+            {
+                throw new ArgumentOutOfRangeException("Produit","Le prix unitaire ne peut pas être inférieur à 0");
+            }
+            if (quantite < ProduitFacture.QUANTITE_MIN_VAL)
+            {
+                throw new ArgumentOutOfRangeException("Produit","La quantité ne peut pas être inférieur à 0");
+            }
+            ProduitFacture produitFacture = new ProduitFacture(produit, prixUnitaire, quantite);
+            this.ProduitsFacture.Add(produitFacture);
+            
 
 
         }
@@ -192,7 +226,19 @@ namespace TP3_420_14B_FX.classes
         public void RetirerProduit(Produit produit)
         {
             //todo : Implémenter RetirerProduit
-            throw new NotImplementedException();
+            if (produit == null)
+            {
+                throw new ArgumentNullException("Produit","Le produit ne peut pas être null");
+            }
+            ProduitFacture produitFacture = new ProduitFacture(produit,produit.Prix,1);
+            if (this.ProduitsFacture.Contains(produitFacture))
+            {
+                this.ProduitsFacture.Remove(produitFacture);
+            }
+            else
+            {
+                throw new InvalidOperationException("Le produit n'existe pas dans la facture");
+            }
 
             #endregion
 

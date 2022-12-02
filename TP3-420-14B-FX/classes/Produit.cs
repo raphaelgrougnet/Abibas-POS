@@ -85,15 +85,16 @@ namespace TP3_420_14B_FX.classes
             set 
             {
                 //Todo: Implémenter validation code produit. FAIT
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    throw new ArgumentNullException("Code", "Le code ne peut pas être nul ou vide");
+                }
                 if (value.Trim().Length < CODE_NB_CARAC_MIN ||value.Trim().Length > CODE_NB_CARAC_MAX)
                 {
                     throw new ArgumentOutOfRangeException("Code", 
                                                          $"La longeur du code doit être comprise entre {CODE_NB_CARAC_MIN} et {CODE_NB_CARAC_MAX} caratères");
                 }
-                if (string.IsNullOrWhiteSpace(value))
-                {
-                    throw new ArgumentNullException("Code", "Le code ne peut pas être nul ou vide");
-                }
+                
                 _code = value.Trim().ToUpper();
             }
 
