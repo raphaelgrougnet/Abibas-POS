@@ -22,6 +22,8 @@ namespace TP3_420_14B_FX
 
         }
 
+        
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
 
