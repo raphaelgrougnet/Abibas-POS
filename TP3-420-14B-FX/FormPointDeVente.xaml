@@ -25,7 +25,7 @@
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="0.5*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel x:Name="spAjouterProduit" Orientation="Horizontal" >
+                            <StackPanel x:Name="spAjouterProduit" Orientation="Horizontal" MouseLeftButtonUp="spAjouterProduit_MouseLeftButtonUp" >
                                 <Image Source="/Resources/new.png" Width="25" Margin="5"/>
                                 <TextBlock  Text="AJOUTER UN PRODUIT" Margin="5" Foreground="#4169e1" VerticalAlignment="Bottom"/>
                             </StackPanel>

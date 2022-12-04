@@ -81,5 +81,16 @@ namespace TP3_420_14B_FX
           
         }
 
+        private void spAjouterProduit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            FormProduit frmProduit = new FormProduit();
+            frmProduit.ShowDialog();
+            if (frmProduit.DialogResult == true)
+            {
+                ProduitFacture produitFactureNew = new ProduitFacture(frmProduit.ProduitAjoutModif, frmProduit.ProduitAjoutModif.Prix, 1);
+            }
+            
+            
+        }
     }
 }
