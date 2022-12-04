@@ -227,15 +227,23 @@ namespace TP3_420_14B_FX.classes
         public static bool operator == (Produit produitGauche, Produit produitDroit)
         {
             //todo : Implémenter Equals pour Produit FAIT
-            if (produitGauche is null || produitDroit is null)
-            {
-                return false;
-            }
             if (Object.ReferenceEquals(produitGauche, produitDroit))
             {
                 return true;
             }
-            return produitGauche.Id == produitDroit.Id && produitGauche.Code == produitDroit.Code;
+            else if (produitGauche is null || produitDroit is null)
+            {
+                return false;
+            }
+            else if(produitGauche.Id == produitDroit.Id && produitGauche.Code == produitDroit.Code)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            
             
 
 
