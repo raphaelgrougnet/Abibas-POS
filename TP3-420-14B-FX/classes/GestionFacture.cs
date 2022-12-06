@@ -101,8 +101,14 @@ namespace TP3_420_14B_FX.classes
                 cmd.ExecuteNonQuery();
 
             }
-            catch(Exception) { throw; }
-            finally { FermerConnection(cn); }
+            catch(Exception) 
+            {
+                throw; 
+            }
+            finally 
+            { 
+                FermerConnection(cn); 
+            }
 
         }
 
@@ -238,8 +244,36 @@ namespace TP3_420_14B_FX.classes
         public static void ModifierProduit(Produit produit)
         {
             //todo : Implémenter ModifierProduit
-            throw new NotImplementedException();
+            if (produit is null)
+                throw new ArgumentNullException("produit", "Le produit ne peut pas être null");
 
+            MySqlConnection cn = CreerConnection();
+
+            try
+            {
+                cn.Open();
+
+                string requete = "UPDATE produits SET Id = @id, Code = @code, Nom = @nom, Prix = @prix, Image = @image, IdCategorie = @idCategorie";
+
+                MySqlCommand cmd  = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", produit.Id);
+                cmd.Parameters.AddWithValue("@code", produit.Code);
+                cmd.Parameters.AddWithValue("@nom", produit.Nom);
+                cmd.Parameters.AddWithValue("@prix", produit.Prix);
+                cmd.Parameters.AddWithValue("@image", produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FermerConnection(cn);
+            }
         }
 
 
