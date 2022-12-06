@@ -36,7 +36,8 @@ namespace TP3_420_14B_FX
         private void AfficherListeProduits()
         {
             //_listeProduit = new List<Produit>() { new Produit(0, "123-4567", "Chaussures Cali de UGG", new Categorie(0, "Chaussures"), 150.55M, @"C:\data-420-14B-FX\data-tp3-420-14b\Images\6f6eec5c-3f7b-496d-8ee4-7a3864e4fe2c.jpg") };/*GestionFacture.ObtenirListeProduits();*/
-            //lstProduits.ItemsSource = _listeProduit;
+            
+
             foreach (Produit produit in _listeProduit)
             {
                 Border border = new Border();
@@ -50,9 +51,9 @@ namespace TP3_420_14B_FX
                 stackPanel.VerticalAlignment = VerticalAlignment.Center;
                 stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
                 stackPanel.Width = 100;
-                stackPanel.Height = 200;
+                stackPanel.Height = 250;
 
-                BitmapImage bi = new BitmapImage(new Uri(produit.Image));
+                BitmapImage bi = new BitmapImage(new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS+ produit.Image));
                 Image imageProd = new Image();
                 imageProd.Source = bi;
                 imageProd.Width = 120;
@@ -74,7 +75,7 @@ namespace TP3_420_14B_FX
                 txtPrixProd.FontWeight = FontWeights.Bold;
                 txtPrixProd.Foreground = new SolidColorBrush(Colors.Green);
                 txtPrixProd.TextAlignment = TextAlignment.Right;
-                txtPrixProd.Margin = new Thickness(0, 10, 4, 5);
+                txtPrixProd.Margin = new Thickness(0, 50, 4, 5);
                 txtPrixProd.Height = 25;
 
                 StackPanel spImgEditSuppr = new StackPanel();
@@ -82,12 +83,12 @@ namespace TP3_420_14B_FX
                 spImgEditSuppr.HorizontalAlignment= HorizontalAlignment.Center;
 
                 Image imgEdit = new Image();
-                bi = new BitmapImage(new Uri("C:\\Users\\rapha\\Desktop\\TP3 Prog2\\TP3-420-14B-FX\\Resources\\edit.png"));
+                bi = new BitmapImage(new Uri(@"\Resources\edit.png", UriKind.Relative));
                 imgEdit.Source = bi;
                 imgEdit.Width = 30;
 
                 Image imgDelete = new Image();
-                bi = new BitmapImage(new Uri("C:\\Users\\rapha\\Desktop\\TP3 Prog2\\TP3-420-14B-FX\\Resources\\delete.png"));
+                bi = new BitmapImage(new Uri(@"\Resources\delete.png",UriKind.Relative));
                 imgDelete.Source = bi;
                 imgDelete.Width = 26;
 

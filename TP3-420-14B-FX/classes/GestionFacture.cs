@@ -13,11 +13,13 @@ namespace TP3_420_14B_FX.classes
 
         public const string CONNEXION = "MySQL";
 
+        public const string CHEMIN_IMAGES_PRODUITS = @"C:\data-420-14B-FX\data-tp3-420-14b\Images\";
+
         #endregion
 
         #region CONSTRUCTEURS
 
-       
+
         #endregion
 
         #region MÉTHODES

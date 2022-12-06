@@ -26,7 +26,7 @@ namespace TP3_420_14B_FX
 
         private EtatFormulaire _etatFormulaire;
 
-        public const string CHEMIN_IMAGES_PRODUITS = @"C:\data-420-14B-FX\data-tp3-420-14b\Images\";
+        
 
         /// <summary>
         /// Constructeur par défaut
@@ -75,7 +75,7 @@ namespace TP3_420_14B_FX
                 BitmapImage biImageAlbum = new BitmapImage();
                 biImageAlbum.BeginInit();
                 biImageAlbum.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                biImageAlbum.UriSource = new Uri(CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image);
+                biImageAlbum.UriSource = new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image);
                 biImageAlbum.CacheOption = BitmapCacheOption.OnLoad;
                 biImageAlbum.EndInit();
 
@@ -141,7 +141,7 @@ namespace TP3_420_14B_FX
 
                     string ext = Path.GetExtension(image);
                     image = Guid.NewGuid() + ext;
-                    File.Copy(cheminFichier, CHEMIN_IMAGES_PRODUITS + image, true);
+                    File.Copy(cheminFichier, GestionFacture.CHEMIN_IMAGES_PRODUITS + image, true);
                     
                     ProduitAjoutModif = new Produit(id, code, nom, categorie, prix, image);
                     DialogResult = true;
@@ -157,13 +157,13 @@ namespace TP3_420_14B_FX
                     ProduitAjoutModif.Prix = Decimal.Parse(txtPrix.Text);
                     BitmapImage biImageProd = imgProduit.Source as BitmapImage;
                     string cheminImage = biImageProd.UriSource.LocalPath;
-                    if (cheminImage != CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image)
+                    if (cheminImage != GestionFacture.CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image)
                     {
                         string ext = Path.GetExtension(cheminImage);
                         string image = Path.GetFileNameWithoutExtension(ProduitAjoutModif.Image);
                         image += ext;
 
-                        File.Copy(cheminImage, CHEMIN_IMAGES_PRODUITS + image, true);
+                        File.Copy(cheminImage, GestionFacture.CHEMIN_IMAGES_PRODUITS + image, true);
 
                         ProduitAjoutModif.Image = image;
                     }
