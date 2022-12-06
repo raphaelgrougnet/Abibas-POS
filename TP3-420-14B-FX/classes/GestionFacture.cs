@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Windows.Media;
 
 namespace TP3_420_14B_FX.classes
 {
@@ -101,8 +102,14 @@ namespace TP3_420_14B_FX.classes
                 cmd.ExecuteNonQuery();
 
             }
-            catch(Exception) { throw; }
-            finally { FermerConnection(cn); }
+            catch(Exception) 
+            {
+                throw; 
+            }
+            finally 
+            { 
+                FermerConnection(cn); 
+            }
 
         }
 
@@ -116,7 +123,94 @@ namespace TP3_420_14B_FX.classes
         public static List<Produit> ObtenirListeProduits(string nomProduit = "", Categorie categorie = null)
         {
             //todo : Implémenter ObtenirListeProduits
-            throw new NotImplementedException();
+            MySqlConnection cn = CreerConnection();
+
+            List<Produit> produits = new List<Produit>();
+
+            List<Categorie> categories = new List<Categorie>();
+
+            categories = ObtenirListeCategories();
+
+            try
+            {
+                cn.Open();
+
+                if (nomProduit == "" && categorie is null)
+                {
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits ORDER BY Nom";
+                    
+                    MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while(dr.Read())
+                    {
+                        uint idCate = dr.GetUInt32(5);
+                        foreach(Categorie pCategorie in categories)
+                        {
+                            if(pCategorie.Id == idCate)
+                                categorie = pCategorie;
+                        }
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        produits.Add(produit);
+                    }
+
+                    dr.Close();
+                }
+                if (nomProduit != "" && categorie is null)
+                {
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom ORDER BY Nom";
+
+                    MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                    cmd.Parameters.AddWithValue("@nom", nomProduit);
+
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        uint idCate = dr.GetUInt32(5);
+                        foreach (Categorie pCategorie in categories)
+                        {
+                            if (pCategorie.Id == idCate)
+                                categorie = pCategorie;
+                        }
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        produits.Add(produit);
+                    }
+
+                    dr.Close();
+                }
+                if (nomProduit != "" && categorie != null)
+                {
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom AND @idCategorie ORDER BY Nom";
+
+                    MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                    cmd.Parameters.AddWithValue("@nom", nomProduit);
+                    cmd.Parameters.AddWithValue("@idCategorie", categorie.Id);
+
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        produits.Add(produit);
+                    }
+
+                    dr.Close();
+                }
+
+                return produits;
+            }
+            catch(Exception) 
+            { 
+                throw; 
+            }
+            finally 
+            { 
+                FermerConnection(cn);  
+            }
         }
 
         /// <summary>
@@ -127,8 +221,19 @@ namespace TP3_420_14B_FX.classes
         public static Produit ObtenirProduit(uint id)
         {
 
-            ////todo : Implémenter ObtenirProduit
-            throw new NotImplementedException();
+            ////todo : Implémenter ObtenirProduit FAIT
+
+            List<Produit> produits = new List<Produit>();
+
+            foreach(Produit produit in produits)
+            {
+                if(produit.Id == id)
+                {
+                    return produit;
+                }
+            }
+
+            return null;
         }
 
 
@@ -139,9 +244,37 @@ namespace TP3_420_14B_FX.classes
         /// <exception cref="System.ArgumentNullException">Lancée lorsque le produit est nul</exception>
         public static void ModifierProduit(Produit produit)
         {
-            //todo : Implémenter ModifierProduit
-            throw new NotImplementedException();
+            //todo : Implémenter ModifierProduit FAIT
+            if (produit is null)
+                throw new ArgumentNullException("produit", "Le produit ne peut pas être null");
 
+            MySqlConnection cn = CreerConnection();
+
+            try
+            {
+                cn.Open();
+
+                string requete = "UPDATE produits SET Id = @id, Code = @code, Nom = @nom, Prix = @prix, Image = @image, IdCategorie = @idCategorie";
+
+                MySqlCommand cmd  = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", produit.Id);
+                cmd.Parameters.AddWithValue("@code", produit.Code);
+                cmd.Parameters.AddWithValue("@nom", produit.Nom);
+                cmd.Parameters.AddWithValue("@prix", produit.Prix);
+                cmd.Parameters.AddWithValue("@image", produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FermerConnection(cn);
+            }
         }
 
 
@@ -154,8 +287,35 @@ namespace TP3_420_14B_FX.classes
         public static void SupprimerProduit(Produit produit)
         {
 
-            //todo : Implémenter SupprimerProduit
-            throw new NotImplementedException();
+            //todo : Implémenter SupprimerProduit MANQUE EXEPTION A LANCÉ
+
+            MySqlConnection cn = CreerConnection();
+
+            try
+            {
+                cn.Open();
+
+                string requete = "DELETE FROM produits WHERE Id = @id AND Code = @code AND Nom = @nom AND Prix = @prix AND Image = @image AND IdCategorie = @idCategorie";
+
+                MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", produit.Id);
+                cmd.Parameters.AddWithValue("@code", produit.Code);
+                cmd.Parameters.AddWithValue("@nom", produit.Nom);
+                cmd.Parameters.AddWithValue("@prix", produit.Prix);
+                cmd.Parameters.AddWithValue("@image", produit.Image);
+                cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
+
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FermerConnection(cn);
+            }
 
         }
 
