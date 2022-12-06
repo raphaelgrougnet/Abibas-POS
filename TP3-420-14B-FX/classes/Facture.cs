@@ -197,6 +197,7 @@ namespace TP3_420_14B_FX.classes
         /// <exception cref="System.ArgumentOutOfRangeException">Lancée si la quantité inférieur à ProduitFacture.QUANTITE_MIN_VAL</exception>
         public void AjouterProduit(Produit produit, decimal prixUnitaire, uint quantite)
         {
+            bool trouve = false;
             //todo : Implémenter AjouterProduit
             if (produit == null)
             {
@@ -211,7 +212,21 @@ namespace TP3_420_14B_FX.classes
                 throw new ArgumentOutOfRangeException("Produit","La quantité ne peut pas être inférieur à 0");
             }
             ProduitFacture produitFacture = new ProduitFacture(produit, prixUnitaire, quantite);
-            this.ProduitsFacture.Add(produitFacture);
+            foreach (ProduitFacture pFacture in ProduitsFacture)
+            {
+                if (pFacture.Produit == produitFacture.Produit)
+                {
+                    pFacture.Quantite += 1;
+
+                    trouve = true;
+                }
+                
+            }
+            if(!trouve)
+            {
+                ProduitsFacture.Add(produitFacture);
+            }
+            
             
 
 
@@ -225,17 +240,29 @@ namespace TP3_420_14B_FX.classes
         ///  <exception cref="System.InvalidOperationException">Lancée lorsque le produit n'existe pas dans la facture</exception>
         public void RetirerProduit(Produit produit)
         {
-            //todo : Implémenter RetirerProduit
-            if (produit == null)
+            //todo : Implémenter RetirerProduit FAIT
+            bool trouve = false;
+            ProduitFacture pFac = null;
+            if (produit is null)
             {
                 throw new ArgumentNullException("Produit","Le produit ne peut pas être null");
             }
-            ProduitFacture produitFacture = new ProduitFacture(produit,produit.Prix,1);
-            if (this.ProduitsFacture.Contains(produitFacture))
+            
+
+            foreach (ProduitFacture pFacture in _produitsFacture)
             {
-                this.ProduitsFacture.Remove(produitFacture);
+                if (pFacture.Produit == produit)
+                {
+
+                    pFac = pFacture;
+                    trouve = true;
+                    
+                }
+                
             }
-            else
+            _produitsFacture.Remove(pFac);
+            
+            if (!trouve)
             {
                 throw new InvalidOperationException("Le produit n'existe pas dans la facture");
             }
