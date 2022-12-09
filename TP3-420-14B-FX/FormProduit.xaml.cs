@@ -75,7 +75,7 @@ namespace TP3_420_14B_FX
                 txtNom.Text = ProduitAjoutModif.Nom;
                 txtPrix.Text = ProduitAjoutModif.Prix.ToString();
                 cboCategories.SelectedItem = ProduitAjoutModif.Categorie;
-                imgProduit.Source = new BitmapImage(new Uri(ProduitAjoutModif.Image));
+                imgProduit.Source = new BitmapImage(new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS +  ProduitAjoutModif.Image));
                 BitmapImage biImageAlbum = new BitmapImage();
                 biImageAlbum.BeginInit();
                 biImageAlbum.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
