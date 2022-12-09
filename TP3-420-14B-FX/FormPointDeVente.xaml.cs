@@ -228,7 +228,23 @@ namespace TP3_420_14B_FX
             
         }
 
-        private void spAjouterProduit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        
+
+        private void imgRechercherFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Facture fact = GestionFacture.ObtenirFacture(UInt32.Parse(txtNoFacture.Text));
+            if (fact != null)
+            {
+                throw new NotImplementedException();
+            }
+            else
+            {
+                MessageBox.Show("Impossible de charger la facture. Ce numéro de facture n'existe pas", "Recherche d'une facture", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            
+        }
+
+        private void spAjouterProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormProduit frmProduit = new FormProduit();
             frmProduit.ShowDialog();
@@ -237,11 +253,11 @@ namespace TP3_420_14B_FX
                 GestionFacture.AjouterProduit(frmProduit.ProduitAjoutModif);
                 AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             }
-
-
         }
 
-
-        
+        private void spNouvelleFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
