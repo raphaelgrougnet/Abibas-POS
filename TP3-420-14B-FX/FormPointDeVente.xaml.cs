@@ -16,21 +16,12 @@ namespace TP3_420_14B_FX
     /// </summary>
     public partial class FormPointDeVente : Window
     {
-        /// <summary>
-        /// Liste de produits
-        /// </summary>
-        private List<Produit> _listeProduit;
-
-       
 
 
         public FormPointDeVente()
         {
             InitializeComponent();
-            _listeProduit = GestionFacture.ObtenirListeProduits();
-           
-            AfficherListeProduits();
-            AfficherListeCategorie();
+            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -39,13 +30,13 @@ namespace TP3_420_14B_FX
            
         }
 
-        private void AfficherListeProduits()
+        private void AfficherListeProduits(List<Produit> pListeProduit)
         {
             //_listeProduit = new List<Produit>() { new Produit(0, "123-4567", "Chaussures Cali de UGG", new Categorie(0, "Chaussures"), 150.55M, @"C:\data-420-14B-FX\data-tp3-420-14b\Images\6f6eec5c-3f7b-496d-8ee4-7a3864e4fe2c.jpg") };/*GestionFacture.ObtenirListeProduits();*/
             wpProduits.Children.Clear();
-            _listeProduit = GestionFacture.ObtenirListeProduits();
+            
 
-            foreach (Produit produit in _listeProduit)
+            foreach (Produit produit in pListeProduit)
             {
                 Border border = new Border();
                 border.BorderBrush = new SolidColorBrush(Colors.Gray);
@@ -211,7 +202,9 @@ namespace TP3_420_14B_FX
 
 
             //todo : Filtrer la liste des produits selon la catégorie.
-          
+            List<Produit> listProd = GestionFacture.ObtenirListeProduits("",border.Tag as Categorie);
+            AfficherListeProduits(listProd);
+            
         }
 
         private void spAjouterProduit_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -221,7 +214,7 @@ namespace TP3_420_14B_FX
             if (frmProduit.DialogResult == true)
             {
                 GestionFacture.AjouterProduit(frmProduit.ProduitAjoutModif);
-                AfficherListeProduits();
+                AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             }
 
 
