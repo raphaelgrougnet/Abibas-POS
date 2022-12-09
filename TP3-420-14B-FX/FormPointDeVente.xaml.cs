@@ -16,15 +16,21 @@ namespace TP3_420_14B_FX
     /// </summary>
     public partial class FormPointDeVente : Window
     {
-
+        /// <summary>
+        /// Liste de produits
+        /// </summary>
         private List<Produit> _listeProduit;
+
+       
 
 
         public FormPointDeVente()
         {
             InitializeComponent();
             _listeProduit = GestionFacture.ObtenirListeProduits();
+           
             AfficherListeProduits();
+            AfficherListeCategorie();
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -63,6 +69,8 @@ namespace TP3_420_14B_FX
                 imageProd.Height = 80;
                 imageProd.HorizontalAlignment = HorizontalAlignment.Center;
                 imageProd.Tag = produit;
+                imageProd.MouseLeftButtonDown += new MouseButtonEventHandler(imgEdit_MouseLeftButtonDown);
+
 
                 TextBlock txtNomProd = new TextBlock();
                 txtNomProd.Text = produit.Nom;
@@ -125,8 +133,11 @@ namespace TP3_420_14B_FX
         {
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
-            //TODO
+            //TODO À REVOIR
+            GestionFacture.SupprimerProduit(prod);
             throw new NotImplementedException();
+            AfficherListeProduits();
+            
         }
 
         private void imgEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -171,6 +182,15 @@ namespace TP3_420_14B_FX
         }
 
         /// <summary>
+        /// Affiche la liste des catégories
+        /// </summary>
+        private void AfficherListeCategorie()
+        {
+            List<Categorie> _listeCategories = GestionFacture.ObtenirListeCategories();
+            _listeCategories.ForEach(categorie => { AjouterBoutonCategorie(categorie); });
+        }
+
+        /// <summary>
         /// Événement se produidant lors du clique sur un bouton catégorie.
         /// </summary>
         /// <param name="sender"></param>
@@ -206,5 +226,8 @@ namespace TP3_420_14B_FX
 
 
         }
+
+
+        
     }
 }
