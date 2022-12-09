@@ -22,6 +22,7 @@ namespace TP3_420_14B_FX
         {
             InitializeComponent();
             AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+            AfficherListeCategorie();
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -124,10 +125,9 @@ namespace TP3_420_14B_FX
         {
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
-            //TODO À REVOIR
+            //TODO FAIT
             GestionFacture.SupprimerProduit(prod);
-            throw new NotImplementedException();
-            AfficherListeProduits();
+            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             
         }
 
