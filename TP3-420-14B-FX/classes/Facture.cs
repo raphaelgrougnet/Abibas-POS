@@ -245,7 +245,7 @@ namespace TP3_420_14B_FX.classes
             ProduitFacture pFac = null;
             if (produit is null)
             {
-                throw new ArgumentNullException("Produit","Le produit ne peut pas être null");
+                throw new ArgumentNullException("Produit","Le produit ne peut pas être nul");
             }
             
 
