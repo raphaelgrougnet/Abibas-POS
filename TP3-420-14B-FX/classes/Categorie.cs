@@ -1,6 +1,7 @@
 ﻿#region USING
 
 using System;
+using System.Windows.Media.TextFormatting;
 
 #endregion
 
@@ -93,8 +94,16 @@ namespace TP3_420_14B_FX.classes
         public override bool Equals(Object obj)
         {
             //todo : Implémenter Equals pour Catégorie
+            
+            
             if (obj == null || obj.GetType() != typeof(Categorie))
                 return false;
+
+            Categorie cat = obj as Categorie;
+            if(cat.Id == this.Id && cat.Nom == this.Nom) return true;
+            
+
+
 
             return this == (Categorie)obj;
 
