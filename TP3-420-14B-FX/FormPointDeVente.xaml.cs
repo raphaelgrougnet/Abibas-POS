@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -54,9 +55,15 @@ namespace TP3_420_14B_FX
                 stackPanel.Height = 250;
                 
 
-                BitmapImage bi = new BitmapImage(new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS+ produit.Image));
+                BitmapImage bi = new BitmapImage(/*new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS+ produit.Image)*/);
                 Image imageProd = new Image();
-                imageProd.Source = bi;
+                BitmapImage biImageAlbum = new BitmapImage();
+                biImageAlbum.BeginInit();
+                biImageAlbum.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
+                biImageAlbum.UriSource = new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS + produit.Image);
+                biImageAlbum.CacheOption = BitmapCacheOption.OnLoad;
+                biImageAlbum.EndInit();
+                imageProd.Source = biImageAlbum;
                 imageProd.Width = 120;
                 imageProd.Height = 80;
                 imageProd.HorizontalAlignment = HorizontalAlignment.Center;
@@ -126,9 +133,17 @@ namespace TP3_420_14B_FX
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
             //TODO FAIT
-            GestionFacture.SupprimerProduit(prod);
-            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+            MessageBoxResult result = MessageBox.Show("Voulez-vous vraiment supprimer ce produit ?", "Supprimer le produit" ,MessageBoxButton.YesNo,MessageBoxImage.Question);
+            if (result == MessageBoxResult.Yes)
+            {
+                
+                GestionFacture.SupprimerProduit(prod);
+                
+                MessageBox.Show("Le produit à été supprimé", "Suppression du produit", MessageBoxButton.OK,MessageBoxImage.Information);
+            }
             
+            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+
         }
 
         private void imgEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -136,7 +151,13 @@ namespace TP3_420_14B_FX
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
             //TODO
-            throw new NotImplementedException();
+            FormProduit frmProduit = new FormProduit(enums.EtatFormulaire.Modifier,prod);
+            frmProduit.ShowDialog();
+            if (frmProduit.DialogResult == true)
+            {
+                GestionFacture.ModifierProduit(frmProduit.ProduitAjoutModif);
+                AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+            }
         }
 
         /// <summary>
