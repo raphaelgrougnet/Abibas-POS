@@ -93,8 +93,11 @@ namespace TP3_420_14B_FX.classes
         public override bool Equals(Object obj)
         {
             //todo : Implémenter Equals pour Catégorie
-            //throw new NotImplementedException();
-            return true;
+            if (obj == null || obj.GetType() != typeof(Categorie))
+                return false;
+
+            return this == (Categorie)obj;
+
         }
 
         #endregion
