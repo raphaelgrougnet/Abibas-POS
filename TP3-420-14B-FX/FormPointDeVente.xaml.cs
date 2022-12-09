@@ -46,12 +46,14 @@ namespace TP3_420_14B_FX
                 border.CornerRadius = new CornerRadius(5);
                 border.Margin = new Thickness(5);
                 border.Padding = new Thickness(10);
+                
 
                 StackPanel stackPanel = new StackPanel();
                 stackPanel.VerticalAlignment = VerticalAlignment.Center;
                 stackPanel.HorizontalAlignment = HorizontalAlignment.Center;
-                stackPanel.Width = 100;
+                stackPanel.Width = 90;
                 stackPanel.Height = 250;
+                
 
                 BitmapImage bi = new BitmapImage(new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS+ produit.Image));
                 Image imageProd = new Image();
@@ -59,6 +61,7 @@ namespace TP3_420_14B_FX
                 imageProd.Width = 120;
                 imageProd.Height = 80;
                 imageProd.HorizontalAlignment = HorizontalAlignment.Center;
+                imageProd.Tag = produit;
 
                 TextBlock txtNomProd = new TextBlock();
                 txtNomProd.Text = produit.Nom;
@@ -67,7 +70,8 @@ namespace TP3_420_14B_FX
                 txtNomProd.TextAlignment = TextAlignment.Left;
                 txtNomProd.Padding = new Thickness(5, 7, 5, 7);
                 txtNomProd.HorizontalAlignment = HorizontalAlignment.Center;
-
+                txtNomProd.Height = 60;
+                
 
                 TextBlock txtPrixProd = new TextBlock();
                 txtPrixProd.Text = produit.Prix + " $";
@@ -77,20 +81,26 @@ namespace TP3_420_14B_FX
                 txtPrixProd.TextAlignment = TextAlignment.Right;
                 txtPrixProd.Margin = new Thickness(0, 50, 4, 5);
                 txtPrixProd.Height = 25;
+                
 
                 StackPanel spImgEditSuppr = new StackPanel();
                 spImgEditSuppr.Orientation = Orientation.Horizontal;
                 spImgEditSuppr.HorizontalAlignment= HorizontalAlignment.Center;
+                
 
                 Image imgEdit = new Image();
                 bi = new BitmapImage(new Uri(@"\Resources\edit.png", UriKind.Relative));
                 imgEdit.Source = bi;
                 imgEdit.Width = 30;
+                imgEdit.MouseLeftButtonDown += new MouseButtonEventHandler(imgEdit_MouseLeftButtonDown);
+                imgEdit.Tag= produit;
 
                 Image imgDelete = new Image();
                 bi = new BitmapImage(new Uri(@"\Resources\delete.png",UriKind.Relative));
                 imgDelete.Source = bi;
                 imgDelete.Width = 26;
+                imgDelete.MouseLeftButtonDown += new MouseButtonEventHandler(imgDelete_MouseLeftButtonDown);
+                imgDelete.Tag= produit;
 
                 spImgEditSuppr.Children.Add(imgEdit);
                 spImgEditSuppr.Children.Add(imgDelete);
@@ -109,7 +119,23 @@ namespace TP3_420_14B_FX
             
             
         }
-        
+
+        private void imgDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            Produit prod = image.Tag as Produit;
+            //TODO
+            throw new NotImplementedException();
+        }
+
+        private void imgEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            Produit prod = image.Tag as Produit;
+            //TODO
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Permet la création et l'affichage d'un bouton catégorie.
         /// </summary>
@@ -173,8 +199,7 @@ namespace TP3_420_14B_FX
             frmProduit.ShowDialog();
             if (frmProduit.DialogResult == true)
             {
-                ProduitFacture produitFactureNew = new ProduitFacture(frmProduit.ProduitAjoutModif, frmProduit.ProduitAjoutModif.Prix, 1);
-                GestionFacture.AjouterProduit(produitFactureNew.Produit);
+                GestionFacture.AjouterProduit(frmProduit.ProduitAjoutModif);
                 
             }
 
