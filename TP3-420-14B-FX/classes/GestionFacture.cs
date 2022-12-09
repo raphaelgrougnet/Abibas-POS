@@ -185,11 +185,29 @@ namespace TP3_420_14B_FX.classes
                 }
                 if (nomProduit != "" && categorie != null)
                 {
-                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom AND @idCategorie ORDER BY Nom";
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom AND IdCategorie = @idCategorie ORDER BY Nom";
 
                     MySqlCommand cmd = new MySqlCommand(requete, cn);
 
                     cmd.Parameters.AddWithValue("@nom", nomProduit);
+                    cmd.Parameters.AddWithValue("@idCategorie", categorie.Id);
+
+                    MySqlDataReader dr = cmd.ExecuteReader();
+
+                    while (dr.Read())
+                    {
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        produits.Add(produit);
+                    }
+
+                    dr.Close();
+                }
+                if(nomProduit == "" && categorie != null)
+                {
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE IdCategorie = @idCategorie ORDER BY Nom";
+
+                    MySqlCommand cmd = new MySqlCommand(requete, cn);
+
                     cmd.Parameters.AddWithValue("@idCategorie", categorie.Id);
 
                     MySqlDataReader dr = cmd.ExecuteReader();
