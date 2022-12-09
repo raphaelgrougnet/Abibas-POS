@@ -1,8 +1,10 @@
-﻿using MySql.Data.MySqlClient;
+﻿using Google.Protobuf.WellKnownTypes;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace TP3_420_14B_FX.classes
@@ -275,7 +277,7 @@ namespace TP3_420_14B_FX.classes
             {
                 cn.Open();
 
-                string requete = "UPDATE produits SET Id = @id, Code = @code, Nom = @nom, Prix = @prix, Image = @image, IdCategorie = @idCategorie";
+                string requete = "UPDATE produits SET Code = @code, Nom = @nom, Prix = @prix, Image = @image, IdCategorie = @idCategorie WHERE Id = @id";
 
                 MySqlCommand cmd  = new MySqlCommand(requete, cn);
 
@@ -316,7 +318,7 @@ namespace TP3_420_14B_FX.classes
             {
                 cn.Open();
 
-                string requete = "DELETE FROM produits WHERE Id = @id AND Code = @code AND Nom = @nom AND Prix = @prix AND Image = @image AND IdCategorie = @idCategorie";
+                string requete = "DELETE FROM produits WHERE Id = @id";
 
                 MySqlCommand cmd = new MySqlCommand(requete, cn);
 
@@ -328,6 +330,12 @@ namespace TP3_420_14B_FX.classes
                 cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
 
                 cmd.ExecuteNonQuery();
+
+                File.Delete(CHEMIN_IMAGES_PRODUITS + produit.Image);
+            }
+            catch (MySql.Data.MySqlClient.MySqlException)
+            {
+                throw new InvalidOperationException();
             }
             catch (Exception)
             {
@@ -335,6 +343,7 @@ namespace TP3_420_14B_FX.classes
             }
             finally
             {
+                
                 FermerConnection(cn);
             }
 
@@ -349,8 +358,49 @@ namespace TP3_420_14B_FX.classes
         /// <exception cref="System.ArgumentNullException">Lancée si la liste des produitsFacture est nulle ou vide.</exception>
         public static void AjouterFacture(Facture facture)
         {
+
+            if (facture is null)
+            {
+                throw new ArgumentNullException("Facture", "La facture ne peut pas être nulle");
+
+            }
+
+            if(facture.ProduitsFacture is null || facture.ProduitsFacture.Count == 0)
+            {
+                throw new ArgumentNullException("ProduitsFacture", "La liste des ProduitsFacture peut pas être nulle ou vide");
+            }
             //todo : Implémenter AjouterFacture
-            throw new NotImplementedException();
+            MySqlConnection cn = CreerConnection();
+
+
+            try
+            {
+                cn.Open();
+
+                string requete = "INSERT INTO factures(Id, Date, MontantSousTotal, MontantTPS, MontantTVQ, MontantTotal) VALUES (@id, @date, @st, @tps, @total)";
+
+                MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", facture.Id);
+                cmd.Parameters.AddWithValue("@date", facture.DateCreation);
+                cmd.Parameters.AddWithValue("@st", facture.MontantSousTotal);
+                cmd.Parameters.AddWithValue("@tps", facture.MontantTPS);
+                cmd.Parameters.AddWithValue("@total", facture.MontantTotal);
+                
+
+                cmd.ExecuteNonQuery();
+
+                
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+
+                FermerConnection(cn);
+            }
         }
 
         /// <summary>
