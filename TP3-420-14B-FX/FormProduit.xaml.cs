@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
+using System.Windows.Automation.Text;
 using System.Windows.Media.Imaging;
 using TP3_420_14B_FX.classes;
 using TP3_420_14B_FX.enums;
@@ -65,6 +66,9 @@ namespace TP3_420_14B_FX
 
         private void InitialiserFormulaire()
         {
+            List<Categorie> categorie = GestionFacture.ObtenirListeCategories();
+            cboCategories.Items.Clear();
+            categorie.ForEach(c => { cboCategories.Items.Add(c); });
             if (ProduitAjoutModif != null)
             {
                 txtCode.Text = ProduitAjoutModif.Code;
@@ -78,9 +82,11 @@ namespace TP3_420_14B_FX
                 biImageAlbum.UriSource = new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image);
                 biImageAlbum.CacheOption = BitmapCacheOption.OnLoad;
                 biImageAlbum.EndInit();
+                cboCategories.SelectedItem = ProduitAjoutModif.Categorie;
 
                 imgProduit.Source = biImageAlbum;
             }
+
             
         }
 

@@ -36,7 +36,8 @@ namespace TP3_420_14B_FX
         private void AfficherListeProduits()
         {
             //_listeProduit = new List<Produit>() { new Produit(0, "123-4567", "Chaussures Cali de UGG", new Categorie(0, "Chaussures"), 150.55M, @"C:\data-420-14B-FX\data-tp3-420-14b\Images\6f6eec5c-3f7b-496d-8ee4-7a3864e4fe2c.jpg") };/*GestionFacture.ObtenirListeProduits();*/
-            
+            wpProduits.Children.Clear();
+            _listeProduit = GestionFacture.ObtenirListeProduits();
 
             foreach (Produit produit in _listeProduit)
             {
@@ -200,7 +201,7 @@ namespace TP3_420_14B_FX
             if (frmProduit.DialogResult == true)
             {
                 GestionFacture.AjouterProduit(frmProduit.ProduitAjoutModif);
-                
+                AfficherListeProduits();
             }
 
 
