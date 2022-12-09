@@ -144,6 +144,7 @@ namespace TP3_420_14B_FX.classes
                     MySqlCommand cmd = new MySqlCommand(requete, cn);
 
                     MySqlDataReader dr = cmd.ExecuteReader();
+                    Categorie icategorie = null;
 
                     while(dr.Read())
                     {
@@ -151,9 +152,9 @@ namespace TP3_420_14B_FX.classes
                         foreach(Categorie pCategorie in categories)
                         {
                             if(pCategorie.Id == idCate)
-                                categorie = pCategorie;
+                                icategorie = pCategorie;
                         }
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), icategorie, dr.GetDecimal(3), dr.GetString(4));
                         produits.Add(produit);
                     }
 
