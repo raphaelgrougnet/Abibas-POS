@@ -21,7 +21,7 @@ namespace TP3_420_14B_FX
         public FormPointDeVente()
         {
             InitializeComponent();
-            AfficherListeProduits();
+            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
