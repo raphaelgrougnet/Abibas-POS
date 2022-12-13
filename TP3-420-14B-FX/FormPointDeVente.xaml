@@ -97,11 +97,11 @@
                                         <TextBlock Text="{Binding Produit.Code}" FontSize="15"/>
                                     </StackPanel>
                                     <StackPanel Orientation="Horizontal">
-                                        <Image Source="/Resources/minus.png" Width="25" Height="25"/>
+                                        <Image Tag="{Binding}" Source="/Resources/minus.png" Width="25" Height="25" MouseDown="RetirerQte_MouseDown"/>
                                         <Border BorderBrush="LightGray" Margin="5" BorderThickness="1" Width="30" Height="25">
                                             <TextBlock Text="{Binding Quantite}"/>
                                         </Border>
-                                        <Image Source="/Resources/plus.png" Width="25" Height="25"/>
+                                        <Image Tag="{Binding}" Source="/Resources/plus.png" Width="25" Height="25" MouseDown="AjouterQte_MouseDown"/>
                                     </StackPanel>
                                     <TextBlock Text="{Binding Produit.Prix}" Width="75" Height="25" Margin="10"/>
                                     <TextBlock Text="{Binding SousTotal}" Width="75" Height="25" Margin="10"/>

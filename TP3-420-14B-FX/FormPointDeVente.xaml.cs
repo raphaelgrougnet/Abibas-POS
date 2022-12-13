@@ -164,8 +164,7 @@ namespace TP3_420_14B_FX
 
         private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //TODO
-            lstProduitsFacture.Items.Clear();
+            //TODO FAIT
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
             _facture.AjouterProduit(prod, prod.Prix, 1);
@@ -281,10 +280,29 @@ namespace TP3_420_14B_FX
             throw new NotImplementedException();
         }
 
+        private void RetirerQte_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            ProduitFacture produitFacture = image.Tag as ProduitFacture;
 
+            if(produitFacture.Quantite > 0)
+            {
+                produitFacture.Quantite -= 1;
+            }
+            else
+            {
+                _facture.RetirerProduit(produitFacture.Produit);
+            }
+            lstProduitsFacture.Items.Refresh();
+        }
 
+        private void AjouterQte_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            ProduitFacture produitFacture = image.Tag as ProduitFacture;
 
-
-
+            _facture.AjouterProduit(produitFacture.Produit, produitFacture.PrixUnitaire, 1);
+            lstProduitsFacture.Items.Refresh();
+        }
     }
 }
