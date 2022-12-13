@@ -170,7 +170,7 @@ namespace TP3_420_14B_FX
 
         private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            //TODO
+            //TODO FAIT
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
             _factureCourante.AjouterProduit(prod, prod.Prix, 1);
@@ -313,19 +313,10 @@ namespace TP3_420_14B_FX
             txtRechercher.Text = "";
         }
 
-        private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            List<Produit> listProd;
-            if (_categorieSelect.Id == 0)
-            {
-                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text);
-            }
-            else
-            {
-                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text, _categorieSelect);
-            }
 
-            AfficherListeProduits(listProd);
-        }
+
+
+
+
     }
 }
