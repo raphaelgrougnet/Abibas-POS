@@ -470,6 +470,8 @@ namespace TP3_420_14B_FX.classes
                     listeProduitFacture.Add(produitFacture);
                 }
 
+                dr1.Close();
+
                 string requete2 = "SELECT Id, Date, MontantSousTotal, MontantTPS, MontantTVQ, MontantTotal FROM factures WHERE Id = @id";
 
                 MySqlCommand cmd2 = new MySqlCommand(requete2, cn);
@@ -480,15 +482,22 @@ namespace TP3_420_14B_FX.classes
 
                 while (dr2.Read())
                 {
-                    Facture facture = new Facture(idFacture, dr2.GetDateTime(1), listeProduitFacture);
+                    Facture facture = new Facture(idFacture, dr2.GetDateTime(1));
 
-                    if(facture != null || idFacture > 0)
+                    foreach (ProduitFacture produitFacture in listeProduitFacture)
+                    {
+                        facture.AjouterProduit(produitFacture.Produit, produitFacture.PrixUnitaire, produitFacture.Quantite);
+                    }
+
+
+                    if (facture != null || idFacture > 0)
                     {
                         return facture;
                     }
 
                 }
                 
+                dr2.Close();
 
                 return null;
             }

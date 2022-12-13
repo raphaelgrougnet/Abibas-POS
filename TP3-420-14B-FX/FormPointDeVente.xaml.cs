@@ -312,11 +312,45 @@ namespace TP3_420_14B_FX
             lstProduitsFacture.IsEnabled = true;
             txtRechercher.Text = "";
         }
+        private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            List<Produit> listProd;
+            if (_categorieSelect.Id == 0)
+            {
+                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text);
+            }
+            else
+            {
+                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text, _categorieSelect);
+            }
 
+            AfficherListeProduits(listProd);
+        }
 
+        private void RetirerQte_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            ProduitFacture produitFacture = image.Tag as ProduitFacture;
 
+            if (produitFacture.Quantite > 0)
+            {
+                produitFacture.Quantite -= 1;
+            }
+            else
+            {
+                _factureCourante.RetirerProduit(produitFacture.Produit);
+            }
+            lstProduitsFacture.Items.Refresh();
+        }
 
+        private void AjouterQte_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Image image = sender as Image;
+            ProduitFacture produitFacture = image.Tag as ProduitFacture;
 
+            _factureCourante.AjouterProduit(produitFacture.Produit, produitFacture.PrixUnitaire, 1);
+            lstProduitsFacture.Items.Refresh();
+        }
 
     }
 }
