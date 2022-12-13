@@ -310,7 +310,7 @@ namespace TP3_420_14B_FX.classes
         public static void SupprimerProduit(Produit produit)
         {
 
-            //todo : Implémenter SupprimerProduit MANQUE EXEPTION A LANCÉ
+            //todo : Implémenter SupprimerProduit
 
             MySqlConnection cn = CreerConnection();
 
@@ -335,7 +335,7 @@ namespace TP3_420_14B_FX.classes
             }
             catch (MySql.Data.MySqlClient.MySqlException)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException("Le produit existe déjà dans au moins une facture");
             }
             catch (Exception)
             {
