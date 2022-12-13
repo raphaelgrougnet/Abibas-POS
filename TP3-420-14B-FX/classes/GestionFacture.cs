@@ -480,7 +480,12 @@ namespace TP3_420_14B_FX.classes
 
                 while (dr2.Read())
                 {
-                    Facture facture = new Facture(idFacture, dr2.GetDateTime(1), listeProduitFacture);
+                    Facture facture = new Facture(idFacture, dr2.GetDateTime(1));
+
+                    foreach(ProduitFacture produitFacture in listeProduitFacture)
+                    {
+                        facture.AjouterProduit(produitFacture.Produit, produitFacture.PrixUnitaire, produitFacture.Quantite);
+                    }
 
                     if(facture != null || idFacture > 0)
                     {
