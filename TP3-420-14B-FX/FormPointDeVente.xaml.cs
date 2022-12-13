@@ -62,7 +62,7 @@ namespace TP3_420_14B_FX
                 BitmapImage biImageAlbum = new BitmapImage();
                 biImageAlbum.BeginInit();
                 biImageAlbum.CreateOptions = BitmapCreateOptions.IgnoreImageCache;
-                biImageAlbum.UriSource = new Uri(GestionFacture.CHEMIN_IMAGES_PRODUITS + produit.Image);
+                biImageAlbum.UriSource = new Uri(produit.Image);
                 biImageAlbum.CacheOption = BitmapCacheOption.OnLoad;
                 biImageAlbum.EndInit();
                 imageProd.Source = biImageAlbum;
@@ -245,15 +245,23 @@ namespace TP3_420_14B_FX
 
         private void imgRechercherFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Facture fact = GestionFacture.ObtenirFacture(UInt32.Parse(txtNoFacture.Text));
-            if (fact != null)
+            if (string.IsNullOrWhiteSpace(txtNoFacture.Text) || !UInt32.TryParse(txtNoFacture.Text, out uint result))
             {
-                throw new NotImplementedException();
+                MessageBox.Show("Impossible de trouver la facture, veulllez saisir un numéro de facture valide.", "Recherche d'une facture", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
             {
-                MessageBox.Show("Impossible de charger la facture. Ce numéro de facture n'existe pas", "Recherche d'une facture", MessageBoxButton.OK, MessageBoxImage.Information);
+                Facture fact = GestionFacture.ObtenirFacture(UInt32.Parse(txtNoFacture.Text));
+                if (fact != null)
+                {
+                    throw new NotImplementedException();
+                }
+                else
+                {
+                    MessageBox.Show("Impossible de charger la facture. Ce numéro de facture n'existe pas.", "Recherche d'une facture", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
+            
             
         }
 
