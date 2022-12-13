@@ -68,7 +68,7 @@ namespace TP3_420_14B_FX
                 imageProd.Height = 80;
                 imageProd.HorizontalAlignment = HorizontalAlignment.Center;
                 imageProd.Tag = produit;
-                imageProd.MouseLeftButtonDown += new MouseButtonEventHandler(imgEdit_MouseLeftButtonDown);
+                imageProd.MouseLeftButtonDown += new MouseButtonEventHandler(imgProd_MouseLeftButtonDown);
 
 
                 TextBlock txtNomProd = new TextBlock();
@@ -158,6 +158,11 @@ namespace TP3_420_14B_FX
                 GestionFacture.ModifierProduit(frmProduit.ProduitAjoutModif);
                 AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             }
+        }
+
+        private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            //TODO
         }
 
         /// <summary>
