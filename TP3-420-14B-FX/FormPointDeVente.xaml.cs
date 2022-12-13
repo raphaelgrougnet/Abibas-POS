@@ -17,15 +17,21 @@ namespace TP3_420_14B_FX
     /// </summary>
     public partial class FormPointDeVente : Window
     {
-        private Facture _facture;
+        private Facture _factureCourante;
+        private Categorie _categorieSelect;
+
 
         public FormPointDeVente()
         {
             InitializeComponent();
             AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+            Categorie Tous = new Categorie(0, "Tous");
+            AjouterBoutonCategorie(Tous);
             AfficherListeCategorie();
-             _facture = new Facture();
-            lstProduitsFacture.ItemsSource = _facture.ProduitsFacture;
+            _categorieSelect = Tous;
+            _factureCourante = new Facture();
+            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+            
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -165,10 +171,9 @@ namespace TP3_420_14B_FX
         private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //TODO
-            lstProduitsFacture.Items.Clear();
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
-            _facture.AjouterProduit(prod, prod.Prix, 1);
+            _factureCourante.AjouterProduit(prod, prod.Prix, 1);
             lstProduitsFacture.Items.Refresh();
             
         }
@@ -236,8 +241,19 @@ namespace TP3_420_14B_FX
 
 
             //todo : Filtrer la liste des produits selon la catégorie.
-            List<Produit> listProd = GestionFacture.ObtenirListeProduits("",border.Tag as Categorie);
-            AfficherListeProduits(listProd);
+            if ((border.Tag as Categorie).Id != 0)
+            {
+                List<Produit> listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text, border.Tag as Categorie);
+                AfficherListeProduits(listProd);
+            }
+            else
+            {
+                List<Produit> listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text);
+                AfficherListeProduits(listProd);
+            }
+
+            _categorieSelect = border.Tag as Categorie;
+            
             
         }
 
@@ -252,9 +268,19 @@ namespace TP3_420_14B_FX
             else
             {
                 Facture fact = GestionFacture.ObtenirFacture(UInt32.Parse(txtNoFacture.Text));
+                //Facture fact = new Facture();
+
+                //fact.AjouterProduit(new Produit(1, "1111-111", "test", new Categorie(1, "pants"), 120M, "C:\\Users\\rapha\\Desktop\\TP3 Prog2\\TP3-420-14B-FX\\Resources\\edit.png"), 120M, 2);
                 if (fact != null)
                 {
-                    throw new NotImplementedException();
+                    _factureCourante= fact;
+                    lstProduitsFacture.ItemsSource = null;
+                    lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+                    lblDateFacture.Text = "Date " + _factureCourante.DateCreation; 
+                    wpProduits.IsEnabled= false;
+                    lstProduitsFacture.IsEnabled= false;
+                    
+
                 }
                 else
                 {
@@ -278,13 +304,28 @@ namespace TP3_420_14B_FX
 
         private void spNouvelleFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            throw new NotImplementedException();
+            _factureCourante = new Facture();
+            
+            lstProduitsFacture.ItemsSource = null;
+            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+            wpProduits.IsEnabled = true;
+            lstProduitsFacture.IsEnabled = true;
+            txtRechercher.Text = "";
         }
 
+        private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            List<Produit> listProd;
+            if (_categorieSelect.Id == 0)
+            {
+                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text);
+            }
+            else
+            {
+                listProd = GestionFacture.ObtenirListeProduits(txtRechercher.Text, _categorieSelect);
+            }
 
-
-
-
-
+            AfficherListeProduits(listProd);
+        }
     }
 }

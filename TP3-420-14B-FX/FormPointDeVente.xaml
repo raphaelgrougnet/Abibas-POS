@@ -31,7 +31,7 @@
                             </StackPanel>
 
                             <TextBox x:Name="txtRechercher" Grid.Column="1"/>
-                            <Image x:Name="imgRechercherProduit" Source="/Resources/search.png" Grid.Column="2" Width="25" />
+                            <Image x:Name="imgRechercherProduit" Source="/Resources/search.png" Grid.Column="2" Width="25" MouseLeftButtonDown="imgRechercherProduit_MouseLeftButtonDown" />
                         </Grid>
                     </Grid>
                     <!--Affichage des produits ici-->
