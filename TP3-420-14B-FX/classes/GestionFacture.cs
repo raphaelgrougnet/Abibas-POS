@@ -164,13 +164,14 @@ namespace TP3_420_14B_FX.classes
                 }
                 if (nomProduit != "" && categorie is null)
                 {
-                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom ORDER BY Nom";
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom LIKE @nom ORDER BY Nom";
 
                     MySqlCommand cmd = new MySqlCommand(requete, cn);
 
-                    cmd.Parameters.AddWithValue("@nom", nomProduit);
+                    cmd.Parameters.AddWithValue("@nom", "%"+nomProduit.ToLower() + "%");
 
                     MySqlDataReader dr = cmd.ExecuteReader();
+                    Categorie icategorie = null;
 
                     while (dr.Read())
                     {
@@ -178,9 +179,9 @@ namespace TP3_420_14B_FX.classes
                         foreach (Categorie pCategorie in categories)
                         {
                             if (pCategorie.Id == idCate)
-                                categorie = pCategorie;
+                                icategorie = pCategorie;
                         }
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), icategorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
                         produits.Add(produit);
                     }
 
@@ -188,11 +189,11 @@ namespace TP3_420_14B_FX.classes
                 }
                 if (nomProduit != "" && categorie != null)
                 {
-                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom = @nom AND IdCategorie = @idCategorie ORDER BY Nom";
+                    string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Nom LIKE @nom AND IdCategorie = @idCategorie ORDER BY Nom";
 
                     MySqlCommand cmd = new MySqlCommand(requete, cn);
 
-                    cmd.Parameters.AddWithValue("@nom", nomProduit);
+                    cmd.Parameters.AddWithValue("@nom", "%"+nomProduit.ToLower()+"%");
                     cmd.Parameters.AddWithValue("@idCategorie", categorie.Id);
 
                     MySqlDataReader dr = cmd.ExecuteReader();
