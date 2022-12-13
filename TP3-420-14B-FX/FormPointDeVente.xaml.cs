@@ -17,13 +17,15 @@ namespace TP3_420_14B_FX
     /// </summary>
     public partial class FormPointDeVente : Window
     {
-
+        private Facture _facture;
 
         public FormPointDeVente()
         {
             InitializeComponent();
             AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             AfficherListeCategorie();
+             _facture = new Facture();
+            lstProduitsFacture.ItemsSource = _facture.ProduitsFacture;
         }
         
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -163,6 +165,12 @@ namespace TP3_420_14B_FX
         private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //TODO
+            lstProduitsFacture.Items.Clear();
+            Image image = sender as Image;
+            Produit prod = image.Tag as Produit;
+            _facture.AjouterProduit(prod, prod.Prix, 1);
+            lstProduitsFacture.Items.Refresh();
+            
         }
 
         /// <summary>
