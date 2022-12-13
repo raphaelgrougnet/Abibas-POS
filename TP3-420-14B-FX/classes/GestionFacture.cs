@@ -245,18 +245,50 @@ namespace TP3_420_14B_FX.classes
         {
 
             ////todo : Implémenter ObtenirProduit FAIT
+            MySqlConnection cn = CreerConnection();
 
-            List<Produit> produits = new List<Produit>();
+            List<Categorie> categories = new List<Categorie>();
 
-            foreach(Produit produit in produits)
+            categories = ObtenirListeCategories();
+
+            try
             {
-                if(produit.Id == id)
+                cn.Open();
+
+                string requete = "SELECT Id, Code, Nom, Prix, Image, IdCategorie FROM produits WHERE Id = @id";
+
+                MySqlCommand cmd = new MySqlCommand(requete, cn);
+
+                cmd.Parameters.AddWithValue("@id", id);
+                
+                MySqlDataReader dr = cmd.ExecuteReader();
+
+                Categorie icategorie = null;
+
+                while (dr.Read())
                 {
+                    uint idCate = dr.GetUInt32(5);
+                    foreach (Categorie pCategorie in categories)
+                    {
+                        if (pCategorie.Id == idCate)
+                            icategorie = pCategorie;
+                    }
+                    Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), icategorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
                     return produit;
                 }
-            }
 
-            return null;
+                dr.Close();
+
+                return null;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FermerConnection(cn);
+            }
         }
 
 
@@ -403,6 +435,8 @@ namespace TP3_420_14B_FX.classes
             }
         }
 
+        
+
         /// <summary>
         /// Permet d'obtenir une facture dans la base de donnée à partir de son identifiant unique
         /// </summary>
@@ -411,8 +445,60 @@ namespace TP3_420_14B_FX.classes
         /// <returns>La facture trouvée. Null si aucune facture n'est trouvée</returns>
         public static Facture ObtenirFacture(uint idFacture)
         {
-            //todo : Implémenter ObtenirFacture
-            throw new NotImplementedException();
+            //todo : Implémenter ObtenirFacture FAIT
+            MySqlConnection cn = CreerConnection();
+
+            List<ProduitFacture> listeProduitFacture = new List<ProduitFacture>();
+
+            try
+            {
+                cn.Open();
+
+                string requete1 = "SELECT IdFacture, IdProduit, PrixUnitaire, Quantite FROM produitsfactures WHERE IdFacture = @id";
+
+                MySqlCommand cmd1 = new MySqlCommand(requete1, cn);
+
+                cmd1.Parameters.AddWithValue("@id", idFacture);
+
+                MySqlDataReader dr1 = cmd1.ExecuteReader();
+
+                while(dr1.Read())
+                {
+                    Produit produit = ObtenirProduit(dr1.GetUInt32(1));
+                    ProduitFacture produitFacture = new ProduitFacture(produit, dr1.GetDecimal(2), dr1.GetUInt32(3));
+                    listeProduitFacture.Add(produitFacture);
+                }
+
+                string requete2 = "SELECT Id, Date, MontantSousTotal, MontantTPS, MontantTVQ, MontantTotal FROM factures WHERE Id = @id";
+
+                MySqlCommand cmd2 = new MySqlCommand(requete2, cn);
+
+                cmd2.Parameters.AddWithValue("@id", idFacture);
+
+                MySqlDataReader dr2 = cmd2.ExecuteReader();
+
+                while (dr2.Read())
+                {
+                    Facture facture = new Facture(idFacture, dr2.GetDateTime(1), listeProduitFacture);
+
+                    if(facture != null || idFacture > 0)
+                    {
+                        return facture;
+                    }
+
+                }
+                
+
+                return null;
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                FermerConnection(cn);
+            }
         }
         #endregion
 
