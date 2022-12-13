@@ -156,7 +156,7 @@ namespace TP3_420_14B_FX.classes
                             if(pCategorie.Id == idCate)
                                 icategorie = pCategorie;
                         }
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), icategorie, dr.GetDecimal(3), dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), icategorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS+dr.GetString(4));
                         produits.Add(produit);
                     }
 
@@ -180,7 +180,7 @@ namespace TP3_420_14B_FX.classes
                             if (pCategorie.Id == idCate)
                                 categorie = pCategorie;
                         }
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
                         produits.Add(produit);
                     }
 
@@ -199,7 +199,7 @@ namespace TP3_420_14B_FX.classes
 
                     while (dr.Read())
                     {
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
                         produits.Add(produit);
                     }
 
@@ -217,7 +217,7 @@ namespace TP3_420_14B_FX.classes
 
                     while (dr.Read())
                     {
-                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), dr.GetString(4));
+                        Produit produit = new Produit(dr.GetUInt32(0), dr.GetString(1), dr.GetString(2), categorie, dr.GetDecimal(3), CHEMIN_IMAGES_PRODUITS + dr.GetString(4));
                         produits.Add(produit);
                     }
 
@@ -331,7 +331,7 @@ namespace TP3_420_14B_FX.classes
 
                 cmd.ExecuteNonQuery();
 
-                File.Delete(CHEMIN_IMAGES_PRODUITS + produit.Image);
+                File.Delete(produit.Image);
             }
             catch (MySql.Data.MySqlClient.MySqlException)
             {
