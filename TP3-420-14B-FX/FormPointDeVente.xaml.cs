@@ -311,6 +311,7 @@ namespace TP3_420_14B_FX
             wpProduits.IsEnabled = true;
             lstProduitsFacture.IsEnabled = true;
             txtRechercher.Text = "";
+            lblDateFacture.Text = "Date ";
         }
         private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
