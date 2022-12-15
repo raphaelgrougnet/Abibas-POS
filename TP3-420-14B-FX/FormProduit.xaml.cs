@@ -55,15 +55,23 @@ namespace TP3_420_14B_FX
 
 
         }
-        
 
-        
 
+
+        /// <summary>
+        /// Fonction qui s'execute au lancement de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             InitialiserFormulaire();
         }
 
+
+        /// <summary>
+        /// Fonction qui initialise l'affichage de l'application
+        /// </summary>
         private void InitialiserFormulaire()
         {
             List<Categorie> categorie = GestionFacture.ObtenirListeCategories();
@@ -90,6 +98,11 @@ namespace TP3_420_14B_FX
             
         }
 
+
+        /// <summary>
+        /// Valide le produit, envoie un message d'erreur si invalide
+        /// </summary>
+        /// <returns>True si valide, False sinon</returns>
         private bool ValiderProduit()
         {
             string message = "";
@@ -130,6 +143,11 @@ namespace TP3_420_14B_FX
             
         }
         
+        /// <summary>
+        /// Fonction qui creer le produit si il est valide
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
         {
             if (ProduitAjoutModif == null)
@@ -180,7 +198,11 @@ namespace TP3_420_14B_FX
         }
             
         
-
+        /// <summary>
+        /// Fonction qui ferme le formulaire
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             if(MessageBox.Show("Voulez-vous annuler?", "Annuler", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
@@ -190,6 +212,11 @@ namespace TP3_420_14B_FX
             
         }
 
+        /// <summary>
+        /// Fonction qui permet d'envoyer une image au formulaire, pour le produuit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnAjouterImage_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
