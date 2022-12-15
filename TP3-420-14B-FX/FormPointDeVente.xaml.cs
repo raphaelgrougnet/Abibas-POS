@@ -194,7 +194,15 @@ namespace TP3_420_14B_FX
             if (frmProduit.DialogResult == true)
             {
                 GestionFacture.ModifierProduit(frmProduit.ProduitAjoutModif);
-                AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+                if (_categorieSelect.Id == 0)
+                {
+                    AfficherListeProduits(GestionFacture.ObtenirListeProduits(txtRechercher.Text.Trim()));
+                }
+                else
+                {
+                    AfficherListeProduits(GestionFacture.ObtenirListeProduits(txtRechercher.Text.Trim(), _categorieSelect));
+                }
+                
             }
         }
 

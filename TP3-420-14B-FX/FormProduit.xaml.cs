@@ -183,7 +183,8 @@ namespace TP3_420_14B_FX
                     string cheminImage = biImageProd.UriSource.LocalPath;
                     if (cheminImage != ProduitAjoutModif.Image)
                     {
-                        string ext = Path.GetExtension(cheminImage);
+                        
+                        string ext = Path.GetExtension(ProduitAjoutModif.Image);
                         string image = Path.GetFileNameWithoutExtension(ProduitAjoutModif.Image);
                         image += ext;
 
