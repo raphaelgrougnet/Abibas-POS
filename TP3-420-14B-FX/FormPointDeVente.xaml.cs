@@ -446,6 +446,9 @@ namespace TP3_420_14B_FX
             AfficherMontant();
         }
 
+        /// <summary>
+        /// Permet de mettre a jour les informations relatives au montant total
+        /// </summary>
         private void AfficherMontant()
         {
             lblSousTotal.DataContext = null;
@@ -458,6 +461,9 @@ namespace TP3_420_14B_FX
             lblTotal.DataContext = _factureCourante;
         }
 
+        /// <summary>
+        /// Permet d'enregistrer la facture courante
+        /// </summary>
         private void EnregistrerFacture()
         {
             GestionFacture.AjouterFacture(_factureCourante);
@@ -469,11 +475,22 @@ namespace TP3_420_14B_FX
             MessageBox.Show("Votre facture a bien été ajouté à la base de données", "Ajout Facture");
         }
 
+        /// <summary>
+        /// Permet d'executer les procédures d'enregistrement de la facture
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
         {
             EnregistrerFacture();
         }
 
+
+        /// <summary>
+        /// Permet de valider si l'utilisateur veut sauvegarder ses modifications et valider si il veut vraiment quitter
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (btnEnregistrer.IsEnabled)
