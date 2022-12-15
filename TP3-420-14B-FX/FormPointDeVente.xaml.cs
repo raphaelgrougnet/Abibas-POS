@@ -371,7 +371,7 @@ namespace TP3_420_14B_FX
                 txtRechercher.Text = "";
                 lblDateFacture.Text = "Date ";
                 txtNoFacture.Text = "";
-                btnEnregistrer.IsEnabled= true;
+                btnEnregistrer.IsEnabled= false;
                 AfficherMontant();
             }
             

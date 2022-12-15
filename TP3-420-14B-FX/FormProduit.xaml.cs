@@ -187,7 +187,7 @@ namespace TP3_420_14B_FX
                         string image = Path.GetFileNameWithoutExtension(ProduitAjoutModif.Image);
                         image += ext;
 
-                        File.Copy(cheminImage, image, true);
+                        File.Copy(cheminImage, GestionFacture.CHEMIN_IMAGES_PRODUITS + image, true);
 
                         ProduitAjoutModif.Image = image;
                     }
