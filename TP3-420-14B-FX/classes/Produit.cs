@@ -255,7 +255,7 @@ namespace TP3_420_14B_FX.classes
             {
                 return false;
             }
-            else if(produitGauche.Id == produitDroit.Id && produitGauche.Code == produitDroit.Code)
+            else if(produitGauche.Code == produitDroit.Code)
             {
                 return true;
             }
