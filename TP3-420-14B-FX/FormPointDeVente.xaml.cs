@@ -422,5 +422,6 @@ namespace TP3_420_14B_FX
             lstProduitsFacture.Items.Refresh();
         }
 
+        
     }
 }
