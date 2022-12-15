@@ -52,6 +52,7 @@ namespace TP3_420_14B_FX
             lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
             AfficherListeProduits(GestionFacture.ObtenirListeProduits());
             AfficherMontant();
+            btnEnregistrer.IsEnabled = false;
         }
 
         /// <summary>
@@ -210,6 +211,7 @@ namespace TP3_420_14B_FX
             _factureCourante.AjouterProduit(prod, prod.Prix, 1);
             lstProduitsFacture.Items.Refresh();
             AfficherMontant();
+            btnEnregistrer.IsEnabled = true;
             
         }
 
@@ -411,9 +413,20 @@ namespace TP3_420_14B_FX
             else
             {
                 _factureCourante.RetirerProduit(produitFacture.Produit);
+
             }
             lstProduitsFacture.Items.Refresh();
             AfficherMontant();
+            if (_factureCourante.ProduitsFacture.Count == 0)
+            {
+                btnEnregistrer.IsEnabled = false;
+            }
+            else
+            {
+                btnEnregistrer.IsEnabled = true;
+            }
+
+
         }
 
         /// <summary>
@@ -461,7 +474,7 @@ namespace TP3_420_14B_FX
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            if (lstProduitsFacture.Items.Count > 0 && !lstProduitsFacture.IsEnabled)
+            if (btnEnregistrer.IsEnabled)
             {
                 MessageBoxResult result = MessageBox.Show("Une facture est en cours d'utilisation, voulez-vous sauvegarder avant de quitter ?", "Quitter l'application", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (result == MessageBoxResult.Yes)
@@ -469,7 +482,7 @@ namespace TP3_420_14B_FX
                     EnregistrerFacture();
                     
                 }
-                Close();
+                
             }
         }
     }
