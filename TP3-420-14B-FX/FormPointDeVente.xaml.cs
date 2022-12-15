@@ -31,6 +31,7 @@ namespace TP3_420_14B_FX
             _categorieSelect = Tous;
             _factureCourante = new Facture();
             lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+            AfficherMontant();
             
         }
         
@@ -175,6 +176,7 @@ namespace TP3_420_14B_FX
             Produit prod = image.Tag as Produit;
             _factureCourante.AjouterProduit(prod, prod.Prix, 1);
             lstProduitsFacture.Items.Refresh();
+            AfficherMontant();
             
         }
 
@@ -304,13 +306,21 @@ namespace TP3_420_14B_FX
 
         private void spNouvelleFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            _factureCourante = new Facture();
+
+            if(MessageBox.Show("Voulez-vous vraiment créer une nouvelle facture", "Nouvelle Facture", 
+                MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                _factureCourante = new Facture();
+
+                lstProduitsFacture.ItemsSource = null;
+                lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+                wpProduits.IsEnabled = true;
+                lstProduitsFacture.IsEnabled = true;
+                txtRechercher.Text = "";
+                lblDateFacture.Text = "Date ";
+                txtNoFacture.Text = "";
+            }
             
-            lstProduitsFacture.ItemsSource = null;
-            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
-            wpProduits.IsEnabled = true;
-            lstProduitsFacture.IsEnabled = true;
-            txtRechercher.Text = "";
         }
         private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
@@ -332,7 +342,7 @@ namespace TP3_420_14B_FX
             Image image = sender as Image;
             ProduitFacture produitFacture = image.Tag as ProduitFacture;
 
-            if (produitFacture.Quantite > 0)
+            if (produitFacture.Quantite > 1)
             {
                 produitFacture.Quantite -= 1;
             }
@@ -341,6 +351,7 @@ namespace TP3_420_14B_FX
                 _factureCourante.RetirerProduit(produitFacture.Produit);
             }
             lstProduitsFacture.Items.Refresh();
+            AfficherMontant();
         }
 
         private void AjouterQte_MouseDown(object sender, MouseButtonEventArgs e)
@@ -350,7 +361,31 @@ namespace TP3_420_14B_FX
 
             _factureCourante.AjouterProduit(produitFacture.Produit, produitFacture.PrixUnitaire, 1);
             lstProduitsFacture.Items.Refresh();
+            AfficherMontant();
         }
 
+        private void AfficherMontant()
+        {
+            lblSousTotal.DataContext = null;
+            lblSousTotal.DataContext = _factureCourante;
+            lblTPS.DataContext = null;
+            lblTPS.DataContext = _factureCourante;
+            lblTVQ.DataContext = null;
+            lblTVQ.DataContext = _factureCourante;
+            lblTotal.DataContext = null;
+            lblTotal.DataContext = _factureCourante;
+        }
+
+        private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
+        {
+            GestionFacture.AjouterFacture(_factureCourante);
+            _factureCourante.DateCreation = DateTime.Now;
+            txtNoFacture.Text = _factureCourante.Id.ToString();
+            lblDateFacture.Text = "Date " + _factureCourante.DateCreation.ToString();
+            lstProduitsFacture.IsEnabled = false;
+            btnEnregistrer.IsEnabled = false;
+            MessageBox.Show("Votre facture a bien été ajouté à la base de données", "Ajout Facture");
+            
+        }
     }
 }

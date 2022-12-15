@@ -410,20 +410,45 @@ namespace TP3_420_14B_FX.classes
             {
                 cn.Open();
 
-                string requete = "INSERT INTO factures(Id, Date, MontantSousTotal, MontantTPS, MontantTVQ, MontantTotal) VALUES (@id, @date, @st, @tps, @total)";
+                string requete1 = "INSERT INTO factures (Date, MontantSousTotal, MontantTPS, MontantTVQ, MontantTotal) VALUES (@date, @st, @tps, @tvq ,@total)";
 
-                MySqlCommand cmd = new MySqlCommand(requete, cn);
+                MySqlCommand cmd1 = new MySqlCommand(requete1, cn);
 
-                cmd.Parameters.AddWithValue("@id", facture.Id);
-                cmd.Parameters.AddWithValue("@date", facture.DateCreation);
-                cmd.Parameters.AddWithValue("@st", facture.MontantSousTotal);
-                cmd.Parameters.AddWithValue("@tps", facture.MontantTPS);
-                cmd.Parameters.AddWithValue("@total", facture.MontantTotal);
+                cmd1.Parameters.AddWithValue("@date", facture.DateCreation);
+                cmd1.Parameters.AddWithValue("@st", facture.MontantSousTotal);
+                cmd1.Parameters.AddWithValue("@tps", facture.MontantTPS);
+                cmd1.Parameters.AddWithValue("@tvq", facture.MontantTVQ);
+                cmd1.Parameters.AddWithValue("@total", facture.MontantTotal);
                 
 
-                cmd.ExecuteNonQuery();
+                cmd1.ExecuteNonQuery();
 
+                uint id = (uint)cmd1.LastInsertedId;
+
+                facture.Id = id;
+
+                string requete2 = "INSERT INTO produitsfactures (IdFacture, IdProduit, PrixUnitaire, Quantite) VALUES (@idFacture, @idProduit, @prixUnitaire, @quantite)";
+
+                MySqlCommand cmd2 = new MySqlCommand(requete2, cn);
+
+                cmd2.Parameters.AddWithValue("@idFacture", id);
+                cmd2.Parameters.Add("@idProduit", MySqlDbType.UInt32);
+                cmd2.Parameters.Add("@prixUnitaire", MySqlDbType.Decimal);
+                cmd2.Parameters.Add("@quantite", MySqlDbType.UInt32);
+
+                cmd2.Prepare();
+
+                foreach(ProduitFacture produitFacture in facture.ProduitsFacture)
+                {
+                    cmd2.Parameters["@idProduit"].Value = produitFacture.Produit.Id;
+                    cmd2.Parameters["@prixUnitaire"].Value = produitFacture.PrixUnitaire;
+                    cmd2.Parameters["@quantite"].Value = produitFacture.Quantite;
+
+                    cmd2.ExecuteNonQuery();
+                }
                 
+                 
+
             }
             catch (Exception)
             {
