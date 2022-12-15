@@ -25,7 +25,10 @@ namespace TP3_420_14B_FX.classes
         #endregion
 
         #region MÉTHODES
-
+        /// <summary>
+        /// Permet de creer une connection a la base de donnée
+        /// </summary>
+        /// <returns>Une connexion MySql</returns>
         private static MySqlConnection CreerConnection()
         {
             string connexion = ConfigurationManager.ConnectionStrings[CONNEXION].ConnectionString;
@@ -33,6 +36,10 @@ namespace TP3_420_14B_FX.classes
             return new MySqlConnection(connexion);
         }
 
+        /// <summary>
+        /// Permet de fermet une connection
+        /// </summary>
+        /// <param name="cn">Une connection à fermer</param>
         public static void FermerConnection(MySqlConnection cn)
         {
             if (cn.State == System.Data.ConnectionState.Open)

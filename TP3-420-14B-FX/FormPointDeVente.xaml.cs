@@ -20,26 +20,45 @@ namespace TP3_420_14B_FX
         private Facture _factureCourante;
         private Categorie _categorieSelect;
 
-
+        /// <summary>
+        /// Constructeur sans paramètre du Formulaire Point de Vente
+        /// </summary>
         public FormPointDeVente()
         {
             InitializeComponent();
-            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
-            Categorie Tous = new Categorie(0, "Tous");
-            AjouterBoutonCategorie(Tous);
-            AfficherListeCategorie();
-            _categorieSelect = Tous;
-            _factureCourante = new Facture();
-            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+            
             
         }
         
+        /// <summary>
+        /// Fonction qui s'execute au lancement de l'application
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-
+            InitialiserFormulaire();
            
         }
 
+        /// <summary>
+        /// Fonction qui initialise l'affichage de l'application
+        /// </summary>
+        private void InitialiserFormulaire()
+        {
+            Categorie Tous = new Categorie(0, "Tous");
+            AjouterBoutonCategorie(Tous);
+            _categorieSelect = Tous;
+            AfficherListeCategorie();
+            _factureCourante = new Facture();
+            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
+            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+        }
+
+        /// <summary>
+        /// Affiche la liste de tous les produits classé en ordre alphabétiqie
+        /// </summary>
+        /// <param name="pListeProduit">Une liste de produits à afficher</param>
         private void AfficherListeProduits(List<Produit> pListeProduit)
         {
             //_listeProduit = new List<Produit>() { new Produit(0, "123-4567", "Chaussures Cali de UGG", new Categorie(0, "Chaussures"), 150.55M, @"C:\data-420-14B-FX\data-tp3-420-14b\Images\6f6eec5c-3f7b-496d-8ee4-7a3864e4fe2c.jpg") };/*GestionFacture.ObtenirListeProduits();*/
@@ -136,6 +155,11 @@ namespace TP3_420_14B_FX
             
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur l'image de suppression d'un produit dans la liste de produits et supprime l'objet
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgDelete_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Image image = sender as Image;
@@ -154,6 +178,12 @@ namespace TP3_420_14B_FX
 
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur l'image de modification d'un produit dans la liste de produits
+        /// et ouvre un nouveau formulaire pour modifier le produit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgEdit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Image image = sender as Image;
@@ -168,6 +198,11 @@ namespace TP3_420_14B_FX
             }
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur l'image du produit, et ajoute a la facture courante, le produit 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgProd_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             //TODO FAIT
@@ -257,8 +292,12 @@ namespace TP3_420_14B_FX
             
         }
 
-        
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur la loupe de recherche dans la section facture, et recherche une facture en fonction de son id
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgRechercherFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(txtNoFacture.Text) || !UInt32.TryParse(txtNoFacture.Text, out uint result))
@@ -278,7 +317,9 @@ namespace TP3_420_14B_FX
                     lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
                     lblDateFacture.Text = "Date " + _factureCourante.DateCreation; 
                     wpProduits.IsEnabled= false;
+                    
                     lstProduitsFacture.IsEnabled= false;
+                    
                     
 
                 }
@@ -291,6 +332,11 @@ namespace TP3_420_14B_FX
             
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur le texte Ajouter produit, et ouvre un nouveau formulaire pour ajouter un produit
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void spAjouterProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             FormProduit frmProduit = new FormProduit();
@@ -302,6 +348,12 @@ namespace TP3_420_14B_FX
             }
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur le texte Nouvelle facture,
+        /// Active tous les controls et vide la facture courante afin d'un creer une nouvelle
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void spNouvelleFacture_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             _factureCourante = new Facture();
@@ -313,6 +365,13 @@ namespace TP3_420_14B_FX
             txtRechercher.Text = "";
             lblDateFacture.Text = "Date ";
         }
+
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur la loupe de recherche dans la section produits, 
+        /// et recherche tous les produits correspondant au nom rentré et a sa catégorie selectionnée
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void imgRechercherProduit_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             List<Produit> listProd;
@@ -328,6 +387,11 @@ namespace TP3_420_14B_FX
             AfficherListeProduits(listProd);
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur le boutton - d'un produit de la facture, et réduit sa quantité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RetirerQte_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Image image = sender as Image;
@@ -344,6 +408,11 @@ namespace TP3_420_14B_FX
             lstProduitsFacture.Items.Refresh();
         }
 
+        /// <summary>
+        /// Fonction qui s'execute quand on clique sur le boutton + d'un produit de la facture, et augmente sa quantité
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void AjouterQte_MouseDown(object sender, MouseButtonEventArgs e)
         {
             Image image = sender as Image;

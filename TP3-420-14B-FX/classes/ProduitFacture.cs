@@ -14,7 +14,7 @@ namespace TP3_420_14B_FX.classes
         #region CONSTANTES
 
         /// <summary>
-        /// Quantté minimale
+        /// Quantité minimale
         /// </summary>
         public const uint QUANTITE_MIN_VAL = 1;
 

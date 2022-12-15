@@ -13,14 +13,34 @@ namespace TP3_420_14B_FX.classes
     {
 
         #region CONSTANTES
-
+        /// <summary>
+        /// Nombre de caractère minimum pour le nom du produit
+        /// </summary>
         public const int NOM_NB_CARAC_MIN = 3;
+
+        /// <summary>
+        /// Nombre de caractère maximum pour le nom du produit
+        /// </summary>
         public const int NOM_NB_CARAC_MAX = 30;
 
+        /// <summary>
+        /// Nombre de caractère minimum pour le code du produit
+        /// </summary>
         public const int CODE_NB_CARAC_MIN = 5;
+
+        /// <summary>
+        /// Nombre de caractère maximum pour le code du produit
+        /// </summary>
         public const int CODE_NB_CARAC_MAX = 10;
 
+        /// <summary>
+        /// Prix minimum pour le produit
+        /// </summary>
         public const int PRIX_MIN_VAL = 0;
+
+        /// <summary>
+        /// Quatité minimal pour un produit
+        /// </summary>
         public const int QUANTITE_MIN_VAL = 1;
 
         #endregion
