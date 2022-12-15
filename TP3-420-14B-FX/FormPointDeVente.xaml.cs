@@ -25,17 +25,7 @@ namespace TP3_420_14B_FX
         /// </summary>
         public FormPointDeVente()
         {
-            InitializeComponent();
-            AfficherListeProduits(GestionFacture.ObtenirListeProduits());
-            Categorie Tous = new Categorie(0, "Tous");
-            AjouterBoutonCategorie(Tous);
-            AfficherListeCategorie();
-            _categorieSelect = Tous;
-            _factureCourante = new Facture();
-            lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
-            AfficherMontant();
-            
-            
+            InitializeComponent(); 
         }
         
         /// <summary>
@@ -61,6 +51,7 @@ namespace TP3_420_14B_FX
             _factureCourante = new Facture();
             lstProduitsFacture.ItemsSource = _factureCourante.ProduitsFacture;
             AfficherListeProduits(GestionFacture.ObtenirListeProduits());
+            AfficherMontant();
         }
 
         /// <summary>
