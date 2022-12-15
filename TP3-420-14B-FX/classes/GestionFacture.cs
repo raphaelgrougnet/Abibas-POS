@@ -317,7 +317,7 @@ namespace TP3_420_14B_FX.classes
             {
                 cn.Open();
 
-                string requete = "UPDATE produits SET Code = @code, Nom = @nom, Prix = @prix, Image = @image, IdCategorie = @idCategorie WHERE Id = @id";
+                string requete = "UPDATE produits SET Code = @code, Nom = @nom, Prix = @prix, IdCategorie = @idCategorie WHERE Id = @id";
 
                 MySqlCommand cmd  = new MySqlCommand(requete, cn);
 
@@ -325,7 +325,7 @@ namespace TP3_420_14B_FX.classes
                 cmd.Parameters.AddWithValue("@code", produit.Code);
                 cmd.Parameters.AddWithValue("@nom", produit.Nom);
                 cmd.Parameters.AddWithValue("@prix", produit.Prix);
-                cmd.Parameters.AddWithValue("@image", produit.Image);
+                
                 cmd.Parameters.AddWithValue("@idCategorie", produit.Categorie.Id);
 
                 cmd.ExecuteNonQuery();

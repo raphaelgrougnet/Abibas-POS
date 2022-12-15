@@ -181,7 +181,7 @@ namespace TP3_420_14B_FX
                     ProduitAjoutModif.Prix = Decimal.Parse(txtPrix.Text);
                     BitmapImage biImageProd = imgProduit.Source as BitmapImage;
                     string cheminImage = biImageProd.UriSource.LocalPath;
-                    if (cheminImage != GestionFacture.CHEMIN_IMAGES_PRODUITS + ProduitAjoutModif.Image)
+                    if (cheminImage != ProduitAjoutModif.Image)
                     {
                         string ext = Path.GetExtension(cheminImage);
                         string image = Path.GetFileNameWithoutExtension(ProduitAjoutModif.Image);
