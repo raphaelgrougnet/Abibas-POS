@@ -443,7 +443,7 @@ namespace TP3_420_14B_FX
             lblTotal.DataContext = _factureCourante;
         }
 
-        private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
+        private void EnregistrerFacture()
         {
             GestionFacture.AjouterFacture(_factureCourante);
             _factureCourante.DateCreation = DateTime.Now;
@@ -452,7 +452,25 @@ namespace TP3_420_14B_FX
             lstProduitsFacture.IsEnabled = false;
             btnEnregistrer.IsEnabled = false;
             MessageBox.Show("Votre facture a bien été ajouté à la base de données", "Ajout Facture");
-            
+        }
+
+        private void btnEnregistrer_Click(object sender, RoutedEventArgs e)
+        {
+            EnregistrerFacture();
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            if (lstProduitsFacture.Items.Count > 0 && !lstProduitsFacture.IsEnabled)
+            {
+                MessageBoxResult result = MessageBox.Show("Une facture est en cours d'utilisation, voulez-vous sauvegarder avant de quitter ?", "Quitter l'application", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    EnregistrerFacture();
+                    
+                }
+                Close();
+            }
         }
     }
 }
