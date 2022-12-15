@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TP3_420_14B_FX"
         mc:Ignorable="d"
-        Title="Point de vente" Height="739" Width="1404" FontSize="18" FontFamily="Calibri" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Abibas POS" Height="739" Width="1404" FontSize="18" FontFamily="Calibri" Loaded="Window_Loaded" Closing="Window_Closing">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
