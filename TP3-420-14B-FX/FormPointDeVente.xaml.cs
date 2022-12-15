@@ -474,12 +474,14 @@ namespace TP3_420_14B_FX
         /// </summary>
         private void EnregistrerFacture()
         {
-            GestionFacture.AjouterFacture(_factureCourante);
+            
             _factureCourante.DateCreation = DateTime.Now;
-            txtNoFacture.Text = _factureCourante.Id.ToString();
+            
             lblDateFacture.Text = "Date " + _factureCourante.DateCreation.ToString();
             lstProduitsFacture.IsEnabled = false;
             btnEnregistrer.IsEnabled = false;
+            GestionFacture.AjouterFacture(_factureCourante);
+            txtNoFacture.Text = _factureCourante.Id.ToString();
             MessageBox.Show("Votre facture a bien été ajouté à la base de données", "Ajout Facture");
         }
 
