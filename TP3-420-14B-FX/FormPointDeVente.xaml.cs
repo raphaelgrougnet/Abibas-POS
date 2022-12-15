@@ -187,7 +187,7 @@ namespace TP3_420_14B_FX
         {
             Image image = sender as Image;
             Produit prod = image.Tag as Produit;
-            //TODO
+            //TODO FAIT
             FormProduit frmProduit = new FormProduit(enums.EtatFormulaire.Modifier,prod);
             frmProduit.ShowDialog();
             if (frmProduit.DialogResult == true)
