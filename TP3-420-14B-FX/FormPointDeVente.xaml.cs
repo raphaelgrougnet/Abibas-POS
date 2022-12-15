@@ -486,6 +486,10 @@ namespace TP3_420_14B_FX
                 }
                 
             }
+            if (MessageBox.Show("Voulez-vous vraiment quitter ?", "Quitter l'application", MessageBoxButton.YesNo, MessageBoxImage.Question) != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
