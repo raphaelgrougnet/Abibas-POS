@@ -187,7 +187,7 @@ namespace TP3_420_14B_FX
                         string image = Path.GetFileNameWithoutExtension(ProduitAjoutModif.Image);
                         image += ext;
 
-                        File.Copy(cheminImage, GestionFacture.CHEMIN_IMAGES_PRODUITS + image, true);
+                        File.Copy(cheminImage, image, true);
 
                         ProduitAjoutModif.Image = image;
                     }
@@ -205,7 +205,11 @@ namespace TP3_420_14B_FX
         /// <param name="e"></param>
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = false;
+            if(MessageBox.Show("Voulez-vous annuler?", "Annuler", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+            {
+                DialogResult = false;
+            }
+            
         }
 
         /// <summary>

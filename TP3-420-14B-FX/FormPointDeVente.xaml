@@ -103,8 +103,8 @@
                                         </Border>
                                         <Image Tag="{Binding}" Source="/Resources/plus.png" Width="25" Height="25" MouseDown="AjouterQte_MouseDown"/>
                                     </StackPanel>
-                                    <TextBlock Text="{Binding Produit.Prix}" Width="75" Height="25" Margin="10"/>
-                                    <TextBlock Text="{Binding SousTotal}" Width="75" Height="25" Margin="10"/>
+                                    <TextBlock Text="{Binding Produit.Prix, StringFormat={}{0:C2}}" Width="75" Height="25" Margin="10"/>
+                                    <TextBlock Text="{Binding SousTotal, StringFormat={}{0:C2}}" Width="75" Height="25" Margin="10"/>
                                 </StackPanel>
                             </StackPanel>
                         </DataTemplate>
@@ -126,22 +126,22 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Sous-Total" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="lblSousTotal" Grid.Row="0" Grid.Column="1" Text="{Binding MontantSousTotal, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Right" Margin="0,0,5,5"/>
+                <TextBlock x:Name="lblSousTotal" Grid.Row="0" Grid.Column="1" Text="{Binding MontantSousTotal, UpdateSourceTrigger=PropertyChanged, StringFormat={}{0:C2}}" HorizontalAlignment="Right" Margin="0,0,5,5"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="TPS" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="lblTPS" Grid.Row="1" Grid.Column="1" Text="{Binding MontantTPS}" HorizontalAlignment="Right"  Margin="0,0,5,5"/>
+                <TextBlock x:Name="lblTPS" Grid.Row="1" Grid.Column="1" Text="{Binding MontantTPS, StringFormat={}{0:C2}}" HorizontalAlignment="Right"  Margin="0,0,5,5"/>
 
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="TVQ" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="lblTVQ" Grid.Row="2" Grid.Column="1" Text="{Binding MontantTVQ}" HorizontalAlignment="Right"  Margin="0,0,5,5"/>
+                <TextBlock x:Name="lblTVQ" Grid.Row="2" Grid.Column="1" Text="{Binding MontantTVQ, StringFormat={}{0:C2}}" HorizontalAlignment="Right"  Margin="0,0,5,5"/>
 
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Total" HorizontalAlignment="Right"/>
-                <TextBlock x:Name="lblTotal" Grid.Row="3" Grid.Column="1" Text="{Binding MontantTotal}" HorizontalAlignment="Right"  Margin="0,0,5,10"/>
+                <TextBlock x:Name="lblTotal" Grid.Row="3" Grid.Column="1" Text="{Binding MontantTotal, StringFormat={}{0:C2}}" HorizontalAlignment="Right"  Margin="0,0,5,10"/>
 
                 <StackPanel Grid.Row="4" x:Name="spNouvelleFacture" Orientation="Horizontal" Margin="5,0" MouseLeftButtonDown="spNouvelleFacture_MouseLeftButtonDown" >
                     <Image Source="/Resources/new.png" Width="25" Margin="5"/>
                     <TextBlock  Text="NOUVELLE FACTURE" Margin="5" Foreground="#4169e1" VerticalAlignment="Bottom"/>
                 </StackPanel>
-                <Button x:Name="btnEnregistrer" Grid.Row="4" Grid.Column="1"  Content="Payer"  Background="#4169e1" Foreground="White" Margin="5,0"/>
+                <Button x:Name="btnEnregistrer" Grid.Row="4" Grid.Column="1"  Content="Payer"  Background="#4169e1" Foreground="White" Margin="5,0" Click="btnEnregistrer_Click"/>
             
             </Grid>
         </Grid>
