@@ -274,7 +274,7 @@ namespace TP3_420_14B_FX_Tests
 
 
             //Assert
-            Assert.False(produit1.Equals(produit2));
+            Assert.True(produit1.Equals(produit2));
             Assert.False(produit1.Equals(produit3));
 
         }
