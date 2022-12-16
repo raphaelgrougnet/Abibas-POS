@@ -329,6 +329,7 @@ namespace TP3_420_14B_FX
                     wpProduits.IsEnabled= false;
                     
                     lstProduitsFacture.IsEnabled= false;
+                    AfficherMontant();
                     
                     
 
